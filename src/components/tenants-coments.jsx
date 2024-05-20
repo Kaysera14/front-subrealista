@@ -9,22 +9,21 @@ export function TenantsComents({ post, user }) {
   const [tenant, setTenant] = useState();
   const { username } = useParams();
   useEffect(() => {
-    try {
+    const fetchTenantsRatingsData = async () => {
       if (user || post) {
-        const fetchTenantsRatingsData = async () => {
-          const ratingsData = await getTenantsRatings(
-            post ? post.rent_owner : user.username
-          );
-          if (ratingsData !== undefined && ratingsData?.status === "ok") {
-            setRatings(ratingsData.data);
-          }
-        };
-
-        fetchTenantsRatingsData();
+        const ratingsData = await getTenantsRatings(
+          post ? post.rent_owner : user.username
+        );
+        /* console.log(ratingsData); */
+        if (ratingsData?.status === "ok") {
+          setRatings(ratingsData?.data);
+        } else {
+          console.error(ratingsData?.message);
+        }
       }
-    } catch {
-      console.error("Este usuario no tiene comentarios");
-    }
+    };
+
+    fetchTenantsRatingsData();
 
     const fetchUserData = async () => {
       const allTenants = [];
@@ -32,6 +31,7 @@ export function TenantsComents({ post, user }) {
       if (ratings) {
         for (const rating of ratings) {
           const tenantData = await getUserDataService(rating?.tenant);
+          console.log(tenantData);
           if (tenantData && tenantData?.status === "ok") {
             allTenants.push(tenantData);
           }

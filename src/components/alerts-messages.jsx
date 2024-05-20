@@ -46,10 +46,10 @@ export const AlertMessages = ({ alertsActive, pendingReservations }) => {
     alertsActive &&
     (pendingReservations?.pendingRentsArray?.length !== 0 ? (
       <section
-        className="absolute -top-36 left-8 bg-white p-4 border rounded-md shadow-md z-50 md:top-14 md:right-6 md:left-auto"
+        className="absolute -top-[8rem] left-12 bg-white p-4 border rounded-md shadow-md z-50 md:top-14 md:right-6 md:left-auto"
         onClick={() => navigate("/users-valorations")}
       >
-        <ul className="flex flex-col w-max custom-scrollbar w-max items-center justify-center overflow-y-scroll md:w-96">
+        <ul className="flex flex-col w-max custom-scrollbar w-max items-center justify-start overflow-y-scroll h-[6rem] md:w-96">
           {pendingReservations?.pendingRentsArray?.map((reservation, index) => {
             return (
               <li

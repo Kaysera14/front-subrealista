@@ -11,6 +11,12 @@ export default function DenseMenu({ active, user }) {
   const navigate = useNavigate();
   const logout = useLogout();
 
+  const handleLogOut = () => {
+    localStorage.setItem("sawReservations", JSON.stringify([]));
+    logout();
+    navigate("/");
+  };
+
   return (
     active &&
     (user === null ? (
@@ -57,12 +63,7 @@ export default function DenseMenu({ active, user }) {
           <MenuItem onClick={() => navigate("/rent-create")}>
             <ListItemText>Pon tu casa en Subrealista</ListItemText>
           </MenuItem>
-          <MenuItem
-            onClick={() => {
-              logout();
-              navigate("/");
-            }}
-          >
+          <MenuItem onClick={() => handleLogOut()}>
             <ListItemText>Cerrar Sesión</ListItemText>
           </MenuItem>
         </MenuList>

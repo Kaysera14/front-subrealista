@@ -20,7 +20,7 @@ export const RentInfo = ({ stepData, setStepData }) => {
             </h3>
             <Input
               aria-label="Título"
-              value={stepData.title}
+              value={stepData.rent_title}
               onChange={(e) =>
                 setStepData({ ...stepData, rent_title: e.target.value })
               }
@@ -34,7 +34,7 @@ export const RentInfo = ({ stepData, setStepData }) => {
             </h3>
             <Input
               aria-label="Descripción"
-              value={stepData.description}
+              value={stepData.rent_description}
               onChange={(e) =>
                 setStepData({ ...stepData, rent_description: e.target.value })
               }

@@ -96,6 +96,7 @@ export function UserPage() {
   }, [userToken, user]);
 
   const handleLogOut = () => {
+    localStorage.setItem("sawReservations", JSON.stringify([]));
     logout();
     navigate("/");
   };

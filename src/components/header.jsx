@@ -21,12 +21,13 @@ export function Header({ handleFilteredPosts, isOpen, setIsOpen }) {
         const pending = data.data.filter(
           (reservation) => reservation.rental_status === "Pendiente"
         );
+        console.log(pending);
 
         const localStorageData = JSON.parse(
           localStorage.getItem("sawReservations")
         );
 
-        if (localStorageData !== null) {
+        if (localStorageData !== null && localStorageData?.length !== 0) {
           setPendingReservations({
             ...pendingReservations,
             pendingRentsArray: pending,

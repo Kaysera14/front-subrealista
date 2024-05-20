@@ -21,6 +21,7 @@ export const RentImages = ({ setStepData, stepData }) => {
         setStepData({
           ...stepData,
           images: [...selectedImages, ...files],
+          webImages: [...webImages, ...newImages],
         });
       }
     }
@@ -32,10 +33,9 @@ export const RentImages = ({ setStepData, stepData }) => {
         Añade algunas imágenes de tu apartamento
       </h2>
 
-      {/* codigo handle image previews,se asume que esta definida em handleAddFilePreview */}
-      {stepData?.images?.length !== 0 && (
+      {stepData?.webImages?.length !== 0 && (
         <ul className="grid grid-cols-6 overflow-y-scroll gap-1">
-          {webImages?.map((image, index) => (
+          {stepData?.webImages?.map((image, index) => (
             <li key={index}>
               <img src={`${image}`} alt="rentImage" className="w-48" />
             </li>
