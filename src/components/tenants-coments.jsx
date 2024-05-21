@@ -10,8 +10,8 @@ export function TenantsComents({ post, user }) {
   const { username } = useParams();
 
   useEffect(() => {
-    const fetchTenantsRatingsData = async () => {
-      if (user || post) {
+    if (user || post) {
+      const fetchTenantsRatingsData = async () => {
         const ratingsData = await getTenantsRatings(
           post ? post.rent_owner : user.username
         );
@@ -20,31 +20,27 @@ export function TenantsComents({ post, user }) {
         } else {
           console.error(ratingsData?.message);
         }
-      }
-    };
+      };
 
-    fetchTenantsRatingsData();
-  }, [user, post]);
+      fetchTenantsRatingsData();
+    }
 
-  useEffect(() => {
     const fetchUserData = async () => {
-      if (ratings.length > 0) {
-        const allTenants = [];
+      const allTenants = [];
 
+      if (ratings) {
         for (const rating of ratings) {
           const tenantData = await getUserDataService(rating?.tenant);
-
           if (tenantData && tenantData?.status === "ok") {
             allTenants.push(tenantData);
           }
         }
-
-        setTenant(allTenants);
       }
+      setTenant(allTenants);
     };
 
     fetchUserData();
-  }, [ratings]);
+  }, [user, post]);
 
   return ratings && ratings?.length !== 0 ? (
     <aside className="flex flex-col py-6 pb-8 gap-2 bg-[--tertiary-color] rounded-t-md w-full max-w-full md:max-w-[50%]">

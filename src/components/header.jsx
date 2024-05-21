@@ -29,13 +29,14 @@ export function Header({ handleFilteredPosts, isOpen, setIsOpen }) {
   useEffect(() => {
     const fetchUsersReservationsData = async () => {
       const data = await getUsersRentals();
+      console.log(data);
       if ((data, data.data)) {
         const pending = data.data.filter(
           (reservation) => reservation.rental_status === "Pendiente"
         );
 
         const localStorageData = JSON.parse(
-          localStorage.getItem("sawReservations") || "[]"
+          localStorage.getItem("sawReservations")
         );
 
         if (localStorageData !== null && localStorageData?.length !== 0) {
@@ -53,10 +54,13 @@ export function Header({ handleFilteredPosts, isOpen, setIsOpen }) {
             pendingRentsNumber: pending.length,
             pendingRentsArray: pending,
           });
-          if (pendingReservations) {
-            localStorage.setItem("sawReservations", pending);
-          }
         }
+      } else {
+        setPendingReservations({
+          ...pendingReservations,
+          pendingRentsArray: [],
+          pendingRentsNumber: 0,
+        });
       }
     };
     fetchUsersReservationsData();

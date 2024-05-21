@@ -108,7 +108,7 @@ export default function CarouselComents({ ratings, tenant }) {
                     <span className="flex flex-row items-center gap-2">
                       <img
                         src={`${
-                          tenant.length !== 0 &&
+                          tenant?.length !== 0 &&
                           (tenant[index].profilePic !== null) | undefined
                             ? tenant[index].profilePic
                             : "/users/default_avatar.png"
