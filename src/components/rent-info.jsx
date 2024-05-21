@@ -12,10 +12,10 @@ export const RentInfo = ({ stepData, setStepData }) => {
       <h2 className="font-semibold text-2xl md:text-3xl">
         Añade información básica sobre tu espacio
       </h2>
-      <section className="flex flex-row w-full items-start justify-center gap-24">
+      <section className="flex flex-col w-full items-start justify-center gap-8 md:gap-24 md:flex-row">
         <section className="flex flex-col gap-8">
           <FormControl fullWidth>
-            <h3 className="font-semibold text-xl mb-2">
+            <h3 className="font-semibold text-md mb-2 md:text-xl">
               Ponle un título a tu vivienda
             </h3>
             <Input
@@ -24,17 +24,29 @@ export const RentInfo = ({ stepData, setStepData }) => {
               onChange={(e) =>
                 setStepData({ ...stepData, rent_title: e.target.value })
               }
+              sx={{
+                alignContent: "center",
+                input: {
+                  textAlign: "center",
+                },
+              }}
               placeholder="Título de tu vivienda…"
             />
           </FormControl>
 
           <FormControl fullWidth>
-            <h3 className="font-semibold text-xl mb-2">
+            <h3 className="font-semibold text-md mb-2 md:text-xl">
               Inserta una descripción para tu vivienda
             </h3>
             <Input
               aria-label="Descripción"
               value={stepData.rent_description}
+              sx={{
+                alignContent: "center",
+                ".MuiInputBase-input": {
+                  textAlign: "center",
+                },
+              }}
               onChange={(e) =>
                 setStepData({ ...stepData, rent_description: e.target.value })
               }
@@ -44,7 +56,7 @@ export const RentInfo = ({ stepData, setStepData }) => {
           </FormControl>
         </section>
         <section className="flex flex-col">
-          <h3 className="font-semibold text-xl mb-2">
+          <h3 className="font-semibold text-md mb-2 md:text-xl">
             ¿Cuántos dormitorios tiene tu vivienda?
           </h3>
           <FormControl fullWidth>
@@ -58,7 +70,12 @@ export const RentInfo = ({ stepData, setStepData }) => {
                   rent_rooms: parseInt(e.target.value),
                 })
               }
-              sx={{ width: "2.5rem" }}
+              sx={{
+                alignContent: "center",
+                input: {
+                  textAlign: "center",
+                },
+              }}
               placeholder="Título de tu vivienda…"
             />
           </FormControl>
