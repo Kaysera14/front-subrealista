@@ -9,7 +9,6 @@ export const RentImages = ({ setStepData, stepData }) => {
     e.preventDefault();
 
     if (e.target) {
-      console.log(e.target.files);
       const files = e.target.files;
       if (files) {
         const filesArray = Array.from(files);

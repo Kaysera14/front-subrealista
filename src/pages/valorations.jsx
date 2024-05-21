@@ -15,40 +15,97 @@ export function Valoraciones() {
 
   const { userData } = useContext(CurrentUserContext);
 
+  // Fetch rentals
+  useEffect(() => {
+    const fetchRentals = async () => {
+      try {
+        const rentalsData = await getMyRentals();
+        if (rentalsData?.status === "ok") {
+          setRentals(rentalsData.data);
+        } else {
+          setError((prevError) => ({
+            ...prevError,
+            errorRes: rentalsData?.message,
+          }));
+        }
+      } catch (error) {
+        console.error("Este usuario no tiene reservas", error);
+      }
+    };
+
+    if (userData) {
+      fetchRentals();
+    }
+  }, [userData]);
+
+  // Fetch ratings
+  useEffect(() => {
+    const fetchRatings = async () => {
+      try {
+        if (userData && userData.username) {
+          const ratingsData = await getTenantsRatings(userData.username);
+          if (ratingsData?.status === "ok") {
+            setRatings(ratingsData.data);
+          } else {
+            setError((prevError) => ({
+              ...prevError,
+              errorVal: ratingsData?.message,
+            }));
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching ratings", error);
+      }
+    };
+
+    fetchRatings();
+  }, [userData]);
+
+  // Fetch posts data for rentals
+  useEffect(() => {
+    const fetchPostDataForRentals = async () => {
+      try {
+        if (rentals && rentals.length > 0) {
+          const postsArray = await Promise.all(
+            rentals.map(async (rental) => {
+              const postData = await getRentData(rental.rental_rent_id);
+              if (postData.status === "ok") {
+                return postData.data.result;
+              } else {
+                setError((prevError) => ({
+                  ...prevError,
+                  errorRes: "Error en la carga de posts",
+                }));
+                return null;
+              }
+            })
+          );
+          setPosts(postsArray.filter((post) => post !== null));
+        }
+      } catch (error) {
+        console.error("Error fetching post data for rentals", error);
+      }
+    };
+
+    fetchPostDataForRentals();
+  }, [rentals]);
+
   const updateRentalsAndPosts = async () => {
-    const rentalsData = await getMyRentals();
-    if (rentalsData) {
-      setRentals(rentalsData.data);
+    try {
+      const rentalsData = await getMyRentals();
+      if (rentalsData?.status === "ok") {
+        setRentals(rentalsData.data);
+      }
+    } catch (error) {
+      console.error("Error updating rentals and posts", error);
     }
   };
 
   useEffect(() => {
     try {
-      const fetchRentals = async () => {
-        if (!rentals) {
-          const rentalsData = await getMyRentals();
-          if (rentalsData?.status === "ok") {
-            setRentals(rentalsData.data);
-          } else {
-            setError({
-              ...error,
-              errorRes: rentalsData?.message,
-            });
-          }
-        }
-      };
-
-      fetchRentals();
-    } catch {
-      console.error("Este usuario no tiene reservas");
-    }
-  }, [userData]);
-
-  useEffect(() => {
-    try {
       const fetchRatings = async () => {
-        if (userData) {
-          const ratingsData = await getTenantsRatings(userData.username);
+        if (userData && userData.username) {
+          const ratingsData = await getTenantsRatings(userData?.username);
 
           if (ratingsData?.status === "ok") {
             setRatings(ratingsData.data);

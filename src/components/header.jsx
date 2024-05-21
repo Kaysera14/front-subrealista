@@ -27,43 +27,44 @@ export function Header({ handleFilteredPosts, isOpen, setIsOpen }) {
   }, [user?.profilePic, location, userData]);
 
   useEffect(() => {
-    const fetchUsersReservationsData = async () => {
-      const data = await getUsersRentals();
-      console.log(data);
-      if ((data, data.data)) {
-        const pending = data.data.filter(
-          (reservation) => reservation.rental_status === "Pendiente"
-        );
+    if (userData && userData.username?.length !== 0) {
+      const fetchUsersReservationsData = async () => {
+        const data = await getUsersRentals();
+        if ((data, data.data)) {
+          const pending = data.data.filter(
+            (reservation) => reservation.rental_status === "Pendiente"
+          );
 
-        const localStorageData = JSON.parse(
-          localStorage.getItem("sawReservations")
-        );
+          const localStorageData = JSON.parse(
+            localStorage.getItem("sawReservations")
+          );
 
-        if (localStorageData !== null && localStorageData?.length !== 0) {
-          setPendingReservations({
-            ...pendingReservations,
-            pendingRentsArray: pending,
-            pendingRentsNumber:
-              pending.length - localStorageData?.length <= 0
-                ? 0
-                : pending.length - localStorageData?.length,
-          });
-          return;
+          if (localStorageData !== null && localStorageData?.length !== 0) {
+            setPendingReservations({
+              ...pendingReservations,
+              pendingRentsArray: pending,
+              pendingRentsNumber:
+                pending.length - localStorageData?.length <= 0
+                  ? 0
+                  : pending.length - localStorageData?.length,
+            });
+            return;
+          } else {
+            setPendingReservations({
+              pendingRentsNumber: pending.length,
+              pendingRentsArray: pending,
+            });
+          }
         } else {
           setPendingReservations({
-            pendingRentsNumber: pending.length,
-            pendingRentsArray: pending,
+            ...pendingReservations,
+            pendingRentsArray: [],
+            pendingRentsNumber: 0,
           });
         }
-      } else {
-        setPendingReservations({
-          ...pendingReservations,
-          pendingRentsArray: [],
-          pendingRentsNumber: 0,
-        });
-      }
-    };
-    fetchUsersReservationsData();
+      };
+      fetchUsersReservationsData();
+    }
   }, [
     pendingReservations?.length,
     localStorage.getItem("sawReservations"),

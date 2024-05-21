@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getUserDataService } from "../services/get-user";
 import dayjs from "dayjs";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const AlertMessages = ({ alertsActive, pendingReservations }) => {
   const [user, setUser] = useState([]);
@@ -90,10 +90,9 @@ export const AlertMessages = ({ alertsActive, pendingReservations }) => {
         <li className="flex flex-row w-full h-full items-center bg-orange-50 py-4 px-8 justify-between">
           <p className="w-full">
             No hay nuevas entradas,
-            <a href="/users-valorations">
-              {" "}
+            <Link to="/users-valorations">
               haz click aquí para ver todas tus reservas
-            </a>
+            </Link>
           </p>
         </li>
       </ul>

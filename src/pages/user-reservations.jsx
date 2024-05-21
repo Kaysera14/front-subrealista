@@ -49,7 +49,7 @@ export const UsersReservations = () => {
   useEffect(() => {
     const fetchUsersReservationsData = async () => {
       const data = await getUsersRentals();
-      if (data) {
+      if (data.status === "ok") {
         const reservationsFilterDeleteds = data.data.filter(
           (reservation) => reservation.rental_deleted === 0
         );

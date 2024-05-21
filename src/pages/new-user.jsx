@@ -52,8 +52,6 @@ export function NewUserPage({ setEmail }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(formData);
-
     const { error } = newUserSchema.validate(formData, {
       abortEarly: false,
     });
