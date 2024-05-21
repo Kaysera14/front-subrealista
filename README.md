@@ -42,12 +42,12 @@
 
 <h2>Colaboradores</h2>
 <ul>
-  <li><a href="https://www.linkedin.com/in/antoniorg-dev/" target="_blank">Antonio Rodríguez-Giménez</a></li>
+  <li><a href="https://www.linkedin.com/in/antoniorg-dev/" target="_blank">Antonio Rondán Gaytán</a></li>
   <li><a href="https://www.linkedin.com/in/yese-astarloa/" target="_blank">Yese Astarloa</a></li>
 </ul>
 
 <h2>Repositorio del Backend</h2>
-<p>Visita el repositorio del backend de Subrealista <a href="https://github.com/Kaysera14/back-subrealista" target="_blank">aquí</a>.</p>
+<p>Visita el repositorio del backend de Subrealista <a href="https://github.com/Manuel080696/back-subrealista" target="_blank">aquí</a>.</p>
 
 <h2>Contribuciones</h2>
 <p>¡Las contribuciones son bienvenidas! Por favor, abre un issue o envía un pull request para cualquier mejora o corrección.</p>
