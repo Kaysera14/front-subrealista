@@ -133,7 +133,7 @@ export const HeaderMobile = ({
           >
             <Avatar
               alt="Foto de perfil"
-              src={userData?.profilePic}
+              src={user?.profilePic}
               sx={{ width: 24, height: 24 }}
             />
             <p className="my-1 font-light">Perfil</p>

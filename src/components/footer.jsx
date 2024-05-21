@@ -12,14 +12,22 @@ export function Footer() {
     return parts[parts.length - 1];
   };
 
+  const getUsernameUpdateFromPathname = () => {
+    const parts = location.pathname.split("/");
+    return parts[parts.length - 2];
+  };
+
   const username = getUsernameFromPathname();
+
+  const usernameUpdate = getUsernameUpdateFromPathname();
 
   return (
     <footer
       className={`px-5 static bottom-0 pb-16 z-0 w-full bg-[var(--secondary-color)] md:pb-0 md:px-0 ${
         location.pathname === "/" ||
+        location.pathname === "/register" ||
         location.pathname === `/users/${username}` ||
-        location.pathname === `users/${username}/update` ||
+        location.pathname === `/users/${usernameUpdate}/update` ||
         location.pathname.includes("/rent/") ||
         location.pathname.includes("/valorations")
           ? "static"

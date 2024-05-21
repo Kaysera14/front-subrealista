@@ -3,15 +3,11 @@ import { Input } from "@mui/material";
 import { useEffect, useState } from "react";
 
 export const RentPriceForm = ({ setStepData, stepData }) => {
-  /* console.log(stepData); */
-
   const [basePrice, setBasePrice] = useState(
     stepData.basePrice !== undefined ? stepData.basePrice : 0
   );
   const commision = basePrice !== 0 ? (basePrice * 28) / 100 : 0;
   const totalPrice = basePrice !== 0 ? basePrice + (basePrice * 28) / 100 : 0;
-
-  /* console.log(parseFloat(basePrice)); */
 
   useEffect(() => {
     if (!isNaN(totalPrice)) {

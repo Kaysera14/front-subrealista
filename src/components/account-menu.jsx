@@ -46,7 +46,7 @@ export default function DenseMenu({ active, user }) {
         className="absolute top-14 right-10 z-0 drop-shadow-lg"
       >
         <MenuList dense>
-          <MenuItem onClick={() => navigate(`/users/${user.username}`)}>
+          <MenuItem onClick={() => navigate(`/users/${user?.username}`)}>
             <ListItemText>
               <strong>Perfil de usuario</strong>
             </ListItemText>

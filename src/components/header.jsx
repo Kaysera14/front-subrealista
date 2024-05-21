@@ -4,34 +4,48 @@ import { HeaderMobile } from "./mobile-header";
 import { HeaderPc } from "./pc-header";
 import { useLocation } from "react-router-dom";
 import { getUsersRentals } from "../services/get-other-users-rentals";
+import { getUserDataService } from "../services/get-user";
 
 export function Header({ handleFilteredPosts, isOpen, setIsOpen }) {
   const [active, setActive] = useState(false);
   const [alertsActive, setAlertsActive] = useState(false);
-  const { user, userData } = useContext(CurrentUserContext);
+  const { userData } = useContext(CurrentUserContext);
+  const [user, setUser] = useState();
   const location = useLocation();
   const isHomePage = location.pathname === "/";
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [pendingReservations, setPendingReservations] = useState([]);
 
   useEffect(() => {
+    const fetchUserData = async () => {
+      const data = await getUserDataService(userData?.username);
+      if (data) {
+        setUser(data);
+      }
+    };
+    fetchUserData();
+  }, [user?.profilePic, location, userData]);
+
+  useEffect(() => {
     const fetchUsersReservationsData = async () => {
       const data = await getUsersRentals();
-      if (data) {
+      if ((data, data.data)) {
         const pending = data.data.filter(
           (reservation) => reservation.rental_status === "Pendiente"
         );
-        console.log(pending);
 
         const localStorageData = JSON.parse(
-          localStorage.getItem("sawReservations")
+          localStorage.getItem("sawReservations") || "[]"
         );
 
         if (localStorageData !== null && localStorageData?.length !== 0) {
           setPendingReservations({
             ...pendingReservations,
             pendingRentsArray: pending,
-            pendingRentsNumber: pending.length - localStorageData?.length,
+            pendingRentsNumber:
+              pending.length - localStorageData?.length <= 0
+                ? 0
+                : pending.length - localStorageData?.length,
           });
           return;
         } else {
@@ -39,11 +53,18 @@ export function Header({ handleFilteredPosts, isOpen, setIsOpen }) {
             pendingRentsNumber: pending.length,
             pendingRentsArray: pending,
           });
+          if (pendingReservations) {
+            localStorage.setItem("sawReservations", pending);
+          }
         }
       }
     };
     fetchUsersReservationsData();
-  }, [pendingReservations?.length]);
+  }, [
+    pendingReservations?.length,
+    localStorage.getItem("sawReservations"),
+    user,
+  ]);
 
   useEffect(() => {
     const handleResize = () => {

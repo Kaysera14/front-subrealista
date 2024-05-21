@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Main } from "../components/main";
 import { Link } from "react-router-dom";
@@ -14,7 +14,8 @@ export function EditUserPage() {
   const [validationErrors, setValidationErrors] = useState("");
   const [userData, setUserData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(""); // Asume que estás usando react-router-dom
+  const [selectedImage, setSelectedImage] = useState();
+  const [error, setError] = useState("");
 
   const [formData, setFormData] = useState({
     username: "",
@@ -22,6 +23,10 @@ export function EditUserPage() {
     address: "",
     bio: "",
   });
+
+  const token = localStorage.getItem(
+    import.meta.env.VITE_APP_CURRENT_USER_STORAGE_ID
+  );
 
   // Carga inicial de los datos del usuario
   useEffect(() => {
@@ -36,6 +41,7 @@ export function EditUserPage() {
               email: data?.email,
               address: data?.address,
               bio: data?.bio,
+              profilePic: data?.profilePic,
             });
           }
         }
@@ -54,7 +60,7 @@ export function EditUserPage() {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: value === null ? "" : value,
     }));
     const error = validateField(name, value, modifyUserSchema);
     setValidationErrors((prev) => ({
@@ -66,15 +72,31 @@ export function EditUserPage() {
   // Enviar los datos actualizados
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      if (userData?.length !== 0) {
-        await updateUser(userData?.username, formData);
+      const formDataToSend = new FormData();
+
+      formDataToSend.append(
+        "username",
+        formData.username === null ? "" : formData.username
+      );
+      formDataToSend.append(
+        "email",
+        formData.email === null ? "" : formData.email
+      );
+      formDataToSend.append(
+        "address",
+        formData.address === null ? "" : formData.address
+      );
+      formDataToSend.append("bio", formData.bio === null ? "" : formData.bio);
+
+      if (selectedImage) {
+        formDataToSend.append("profilePic", selectedImage);
       }
+
+      await updateUser(userData.username, formDataToSend, token);
+      navigate(`/users/${username}`);
     } catch (error) {
       setError("Error al actualizar el usuario");
-    } finally {
-      navigate(`/users/${username}`);
     }
   };
 
@@ -82,9 +104,10 @@ export function EditUserPage() {
 
   return (
     <Main>
-      <section className="flex flex-col h-[65vh] justify-center items-center w-full">
+      <section className="flex flex-col justify-evenly items-center w-full">
         <h1 className="text-4xl block self-center">Edita tu cuenta</h1>
         <UserEditForm
+          setSelectedImage={setSelectedImage}
           formData={formData}
           handleInputChange={handleInputChange}
           validationErrors={validationErrors}

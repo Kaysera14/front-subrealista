@@ -5,11 +5,12 @@ export const RentImages = ({ setStepData, stepData }) => {
   const [selectedImages, setSelectedImages] = useState([]);
   const [webImages, setWebImages] = useState([]);
 
-  const submitImage = (e) => {
+  const handleChangeImage = (e) => {
     e.preventDefault();
 
     if (e.target) {
-      const files = e.target[0].files;
+      console.log(e.target.files);
+      const files = e.target.files;
       if (files) {
         const filesArray = Array.from(files);
 
@@ -25,6 +26,10 @@ export const RentImages = ({ setStepData, stepData }) => {
         });
       }
     }
+  };
+
+  const handleFileClick = () => {
+    fileInputRef.current.click();
   };
 
   return (
@@ -43,21 +48,23 @@ export const RentImages = ({ setStepData, stepData }) => {
         </ul>
       )}
 
-      <form
-        className="flex flex-row items-center justify-center mt-4"
-        onSubmit={(e) => submitImage(e)}
-      >
+      <form className="flex flex-row items-center justify-center mt-4">
         <label>
           <input
-            className="custom-file-input"
+            className="custom-file-input hidden"
             type="file"
             id="file-input"
+            onChange={handleChangeImage}
             accept="image/*"
             ref={fileInputRef}
             multiple
-          />{" "}
+          />
         </label>
-        <button className="flex flex-col items-center justify-center bg-black text-white p-4 rounded-md">
+        <button
+          type="button"
+          className="flex flex-col items-center justify-center bg-black text-white p-4 rounded-md"
+          onClick={handleFileClick}
+        >
           Añadir imágenes
         </button>
       </form>

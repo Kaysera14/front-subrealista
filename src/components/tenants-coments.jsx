@@ -14,7 +14,6 @@ export function TenantsComents({ post, user }) {
         const ratingsData = await getTenantsRatings(
           post ? post.rent_owner : user.username
         );
-        /* console.log(ratingsData); */
         if (ratingsData?.status === "ok") {
           setRatings(ratingsData?.data);
         } else {
@@ -31,7 +30,7 @@ export function TenantsComents({ post, user }) {
       if (ratings) {
         for (const rating of ratings) {
           const tenantData = await getUserDataService(rating?.tenant);
-          console.log(tenantData);
+
           if (tenantData && tenantData?.status === "ok") {
             allTenants.push(tenantData);
           }

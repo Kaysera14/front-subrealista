@@ -91,7 +91,7 @@ export const HeaderPc = ({
           >
             <MenuIcon sx={{ fontSize: "1.5rem" }} />
             <AccountCircleIcon sx={{ fontSize: "2.5rem" }} />
-            <AccountMenu active={active} user={user} />
+            <AccountMenu active={active} user={userData} />
           </button>
         </section>
         <section
@@ -140,7 +140,7 @@ export const HeaderPc = ({
               }`}
             >
               <MenuIcon sx={{ fontSize: "1.5rem" }} />
-              <Avatar alt="Foto de perfil" src={userData?.profilePic} />
+              <Avatar alt="Foto de perfil" src={user?.profilePic} />
               <AccountMenu active={active} user={user} />
             </button>
           </span>

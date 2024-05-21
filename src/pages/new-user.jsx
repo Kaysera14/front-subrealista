@@ -17,6 +17,7 @@ export function NewUserPage({ setEmail }) {
     password: "",
   });
   const [secondPassword, setSecondPassword] = useState("");
+  const [selectedImage, setSelectedImage] = useState();
 
   const [validationErrors, setValidationErrors] = useState({});
 
@@ -51,6 +52,8 @@ export function NewUserPage({ setEmail }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    console.log(formData);
+
     const { error } = newUserSchema.validate(formData, {
       abortEarly: false,
     });
@@ -65,12 +68,30 @@ export function NewUserPage({ setEmail }) {
       return;
     }
     if (formData?.password === secondPassword) {
-      const registrationSuccessful = await registerUser(
-        formData.email,
-        formData.username,
-        formData.password,
-        secondPassword
+      const formDataToSend = new FormData();
+
+      formDataToSend.append(
+        "username",
+        formData.username === null ? "" : formData.username
       );
+      formDataToSend.append(
+        "email",
+        formData.email === null ? "" : formData.email
+      );
+      formDataToSend.append(
+        "password",
+        formData.password === null ? "" : formData.password
+      );
+      formDataToSend.append(
+        "repeatPassword",
+        secondPassword === null ? "" : secondPassword
+      );
+
+      if (selectedImage) {
+        formDataToSend.append("profilePic", selectedImage);
+      }
+
+      const registrationSuccessful = await registerUser(formDataToSend);
 
       if (registrationSuccessful) {
         navigate("/validate");
@@ -82,7 +103,7 @@ export function NewUserPage({ setEmail }) {
 
   return (
     <Main>
-      <section className="flex flex-col h-[65vh] w-full items-center justify-center">
+      <section className="flex flex-col w-full items-center justify-center">
         <h1 className="text-4xl block self-center mb-5">Crea tu cuenta</h1>
         <RegistrationForm
           formData={formData}
@@ -90,6 +111,7 @@ export function NewUserPage({ setEmail }) {
           validationErrors={validationErrors}
           handleSubmit={handleSubmit}
           setSecondPassword={setSecondPassword}
+          setSelectedImage={setSelectedImage}
         />
         {error ? (
           <Stack
