@@ -24,7 +24,7 @@ export const UserEditForm = ({
       }
     };
     fetchUserData();
-  }, [user?.profilePic]);
+  }, [userData?.username, user?.profilePic]);
 
   const handleChangeImage = (e) => {
     e.preventDefault();
@@ -73,7 +73,7 @@ export const UserEditForm = ({
             type="text"
             name="username"
             autoComplete="username"
-            value={formData.username}
+            value={formData.username || ""}
             onChange={handleInputChange}
             error={!!validationErrors.username}
             helperText={validationErrors.username}
@@ -83,7 +83,7 @@ export const UserEditForm = ({
             type="email"
             name="email"
             autoComplete="email"
-            value={formData.email}
+            value={formData.email || ""}
             onChange={handleInputChange}
             error={!!validationErrors.email}
             helperText={validationErrors.email}
@@ -92,15 +92,14 @@ export const UserEditForm = ({
             label="Dirección"
             name="address"
             autoComplete="address"
-            value={formData.address}
+            value={formData.address || ""}
             onChange={handleInputChange}
           />
-
           <TextField
             label="Descripción"
             name="bio"
             autoComplete="bio"
-            value={formData.bio}
+            value={formData.bio || ""}
             onChange={handleInputChange}
             className="w-10/12 pl-3"
           />

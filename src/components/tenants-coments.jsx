@@ -8,6 +8,7 @@ export function TenantsComents({ post, user }) {
   const [ratings, setRatings] = useState([]);
   const [tenant, setTenant] = useState();
   const { username } = useParams();
+
   useEffect(() => {
     const fetchTenantsRatingsData = async () => {
       if (user || post) {
@@ -23,11 +24,13 @@ export function TenantsComents({ post, user }) {
     };
 
     fetchTenantsRatingsData();
+  }, [user, post]);
 
+  useEffect(() => {
     const fetchUserData = async () => {
-      const allTenants = [];
+      if (ratings.length > 0) {
+        const allTenants = [];
 
-      if (ratings) {
         for (const rating of ratings) {
           const tenantData = await getUserDataService(rating?.tenant);
 
@@ -35,12 +38,13 @@ export function TenantsComents({ post, user }) {
             allTenants.push(tenantData);
           }
         }
+
+        setTenant(allTenants);
       }
-      setTenant(allTenants);
     };
 
     fetchUserData();
-  }, [user, post]);
+  }, [ratings]);
 
   return ratings && ratings?.length !== 0 ? (
     <aside className="flex flex-col py-6 pb-8 gap-2 bg-[--tertiary-color] rounded-t-md w-full max-w-full md:max-w-[50%]">
