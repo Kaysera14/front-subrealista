@@ -210,7 +210,7 @@ export function UserPage() {
                         <p>{userData?.address}</p>
                       </li>
                     )}
-                    {userData?.bio && user?.bio.length !== 0 && (
+                    {userData?.bio && userData?.bio.length !== 0 && (
                       <p>{userData?.bio}</p>
                     )}
                   </React.Fragment>
