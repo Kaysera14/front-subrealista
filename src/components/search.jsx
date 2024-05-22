@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { forwardRef, useImperativeHandle, useState } from "react";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import "./search.css";
@@ -6,13 +6,28 @@ import { Fecha } from "./date-calendar";
 import { PriceRange } from "./price-range";
 import dayjs from "dayjs";
 
-export default function Search({ handleFilteredPosts }) {
+const Search = forwardRef(({ handleFilteredPosts }, ref) => {
   const [location, setLocation] = useState("");
   const [price, setPrice] = useState([0, 2500]);
   const [dateValue, setDateValue] = useState();
   const [rooms, setRooms] = useState(0);
   const [activeDate, setActiveDate] = useState(false);
   const [activePrice, setActivePrice] = useState(false);
+
+  // Función para resetear los filtros
+  const resetFilters = () => {
+    setLocation("");
+    setPrice([0, 2500]);
+    setDateValue();
+    setRooms(0);
+    setActiveDate(false);
+    setActivePrice(false);
+  };
+
+  // Exponer la función resetFilters a través de ref
+  useImperativeHandle(ref, () => ({
+    resetFilters,
+  }));
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -165,4 +180,6 @@ export default function Search({ handleFilteredPosts }) {
       </form>
     </aside>
   );
-}
+});
+
+export default Search;

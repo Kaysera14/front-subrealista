@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { SearchMobile } from "./search-mobile";
+import SearchMobile from "./search-mobile";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import Avatar from "@mui/material/Avatar";
@@ -17,6 +17,8 @@ export const HeaderMobile = ({
   setAlertsActive,
   pendingReservations,
   setPendingReservations,
+  searchRef,
+  handleLogoClick,
 }) => {
   const location = useLocation();
   const handleAlertsNotifications = () => {
@@ -63,7 +65,7 @@ export const HeaderMobile = ({
         <li className="w-24 active:text-[var(--quaternary-color)]   ">
           <Link
             to="/"
-            onClick={() => handleFilteredPosts([])}
+            onClick={() => handleLogoClick()}
             className="flex flex-col justify-center items-center h-3/5"
           >
             <SearchIcon className="text-gray" />
@@ -86,6 +88,7 @@ export const HeaderMobile = ({
           isOpen={isOpen}
           setIsOpen={setIsOpen}
           handleFilteredPosts={handleFilteredPosts}
+          ref={searchRef}
         />
       </section>
     </header>
@@ -118,7 +121,7 @@ export const HeaderMobile = ({
         <li className="w-24 active:text-[var(--quaternary-color)]   ">
           <Link
             to="/"
-            onClick={() => handleFilteredPosts([])}
+            onClick={() => handleLogoClick()}
             className="flex flex-col justify-center items-center h-3/5"
           >
             <SearchIcon className="text-gray" />
@@ -145,6 +148,7 @@ export const HeaderMobile = ({
           isOpen={isOpen}
           setIsOpen={setIsOpen}
           handleFilteredPosts={handleFilteredPosts}
+          ref={searchRef}
         />
       </section>
     </header>

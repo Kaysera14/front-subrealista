@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { CurrentUserContext } from "../context/auth-context";
 import { HeaderMobile } from "./mobile-header";
 import { HeaderPc } from "./pc-header";
@@ -12,6 +12,7 @@ export function Header({ handleFilteredPosts, isOpen, setIsOpen }) {
   const { userData } = useContext(CurrentUserContext);
   const [user, setUser] = useState();
   const location = useLocation();
+  const searchRef = useRef();
   const isHomePage = location.pathname === "/";
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [pendingReservations, setPendingReservations] = useState([]);
@@ -83,6 +84,13 @@ export function Header({ handleFilteredPosts, isOpen, setIsOpen }) {
     };
   }, []);
 
+  const handleLogoClick = () => {
+    handleFilteredPosts([]);
+    if (searchRef.current) {
+      searchRef.current.resetFilters(); // Llamar a la función resetFilters del componente Search
+    }
+  };
+
   return isMobile ? (
     <HeaderMobile
       handleFilteredPosts={handleFilteredPosts}
@@ -94,6 +102,8 @@ export function Header({ handleFilteredPosts, isOpen, setIsOpen }) {
       user={user}
       pendingReservations={pendingReservations}
       setPendingReservations={setPendingReservations}
+      searchRef={searchRef}
+      handleLogoClick={handleLogoClick}
     />
   ) : (
     <HeaderPc
@@ -107,6 +117,8 @@ export function Header({ handleFilteredPosts, isOpen, setIsOpen }) {
       isHomePage={isHomePage && isHomePage}
       pendingReservations={pendingReservations}
       setPendingReservations={setPendingReservations}
+      searchRef={searchRef}
+      handleLogoClick={handleLogoClick}
     />
   );
 }

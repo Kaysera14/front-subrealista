@@ -171,7 +171,7 @@ export default function CarouselValoraciones({
                         readOnly
                         className="-ml-1"
                       />
-                      <p className="mt-2">No comments jet</p>
+                      <p className="mt-2">No comments yet</p>
                     </aside>
                   </aside>
                 </li>
@@ -310,7 +310,7 @@ export default function CarouselValoraciones({
                             readOnly
                             className="-ml-1"
                           />
-                          <p className="mt-2">No comments jet</p>
+                          <p className="mt-2">No comments yet</p>
                         </aside>
                       </aside>
                     </section>

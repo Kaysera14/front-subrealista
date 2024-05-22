@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
 import { Main } from "../components/main";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Alert, Stack } from "@mui/material";
 import { ValidateForm } from "../forms/validate-form";
 import { userValidate } from "../services/user-validate";
 
 export function Validate({ email, setEmail }) {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 768);
   const [success, setSuccess] = useState(
     `Se ha enviado un correo con el código de verificación a tu email ${email}`
   );
   const [error, setError] = useState("");
   const [formData, setFormData] = useState({
-    code: "",
+    code: searchParams.get("registrationCode") || "",
   });
 
   useEffect(() => {

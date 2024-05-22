@@ -19,6 +19,8 @@ export const HeaderPc = ({
   user,
   pendingReservations,
   setPendingReservations,
+  searchRef,
+  handleLogoClick,
 }) => {
   const handleAlertsNotifications = () => {
     setPendingReservations({
@@ -78,7 +80,7 @@ export const HeaderPc = ({
         <section className="flex flex-row justify-between items-center w-full">
           <Link
             to="/"
-            onClick={() => handleFilteredPosts("")}
+            onClick={() => handleLogoClick()}
             className="flex flex-col justify-center items-center h-3/5"
           >
             <img src="/logo/logo.webp" alt="search" className="w-24" />
@@ -101,7 +103,7 @@ export const HeaderPc = ({
               : "hidden"
           }
         >
-          <Search handleFilteredPosts={handleFilteredPosts} />
+          <Search handleFilteredPosts={handleFilteredPosts} ref={searchRef} />
         </section>
       </nav>
     </header>
@@ -111,7 +113,7 @@ export const HeaderPc = ({
         <section className="flex flex-row justify-between items-center w-full">
           <Link
             to="/"
-            onClick={() => handleFilteredPosts([])}
+            onClick={() => handleLogoClick()}
             className="flex flex-col justify-center items-center h-3/5"
           >
             <img src="/logo/logo.webp" alt="search" className="w-24" />
@@ -152,7 +154,7 @@ export const HeaderPc = ({
               : "hidden"
           }
         >
-          <Search handleFilteredPosts={handleFilteredPosts} />
+          <Search handleFilteredPosts={handleFilteredPosts} ref={searchRef} />
         </section>
       </nav>
     </header>
