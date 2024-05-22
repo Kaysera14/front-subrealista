@@ -100,7 +100,6 @@ export function EditUserPage() {
       }
 
       const data = await updateUser(userData.username, formDataToSend, token);
-      console.log(data);
 
       if (data && data.status === "ok") {
         localStorage.setItem("userToken", data?.newToken);

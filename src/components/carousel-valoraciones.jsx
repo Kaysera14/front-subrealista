@@ -257,7 +257,6 @@ export default function CarouselValoraciones({
                 .slice(groupIndex * 3, groupIndex * 3 + 3)
                 .map((rent, index) => {
                   const realIndex = groupIndex * 3 + index;
-                  console.log(rentals, currentDate);
                   const rentRating = searchPostRatingId(rent);
                   const ratingValue = parseInt(rentRating?.rating);
                   const ratingComments = rentRating?.comments;
