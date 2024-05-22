@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Main } from "../components/main";
 import { Link } from "react-router-dom";
@@ -7,10 +7,13 @@ import { validateField, modifyUserSchema } from "../utils/joi-validation";
 import { updateUser } from "../services/update-user";
 import { Alert, Stack } from "@mui/material";
 import { getUserDataService } from "../services/get-user";
+import { getCurrentUserFromLocalStorage } from "../utils/get-current-user";
+import { useLogin } from "../hooks/use-login";
 
 export function EditUserPage() {
   const navigate = useNavigate();
   const { username } = useParams();
+  const setCurrentUserToken = useLogin();
   const [validationErrors, setValidationErrors] = useState("");
   const [userData, setUserData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -52,7 +55,7 @@ export function EditUserPage() {
       }
     };
     fetchData();
-  }, [username]);
+  }, [username, localStorage.getItem("userToken")]);
 
   // Manejo de cambios en el formulario y validación
   const handleInputChange = (e) => {
@@ -90,11 +93,21 @@ export function EditUserPage() {
       formDataToSend.append("bio", formData.bio === null ? "" : formData.bio);
 
       if (selectedImage) {
-        formDataToSend.append("profilePic", selectedImage);
+        formDataToSend.append(
+          "profilePic",
+          selectedImage === undefined ? null : selectedImage
+        );
       }
 
-      await updateUser(userData.username, formDataToSend, token);
-      navigate(`/users/${username}`);
+      const data = await updateUser(userData.username, formDataToSend, token);
+      console.log(data);
+
+      if (data && data.status === "ok") {
+        localStorage.setItem("userToken", data?.newToken);
+        setCurrentUserToken(data?.newToken);
+      }
+
+      navigate(`/users/${data?.data?.tokenPayLoad?.newUsername}`);
     } catch (error) {
       setError("Error al actualizar el usuario");
     }

@@ -36,7 +36,7 @@ export function Valoraciones() {
     if (userData) {
       fetchRentals();
     }
-  }, [userData]);
+  }, [userData?.username]);
 
   // Fetch ratings
   useEffect(() => {

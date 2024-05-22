@@ -257,6 +257,7 @@ export default function CarouselValoraciones({
                 .slice(groupIndex * 3, groupIndex * 3 + 3)
                 .map((rent, index) => {
                   const realIndex = groupIndex * 3 + index;
+                  console.log(rentals, currentDate);
                   const rentRating = searchPostRatingId(rent);
                   const ratingValue = parseInt(rentRating?.rating);
                   const ratingComments = rentRating?.comments;
@@ -282,14 +283,14 @@ export default function CarouselValoraciones({
                       )}
                       <aside className="flex flex-col">
                         <span className="flex flex-col relative items-center justify-center">
-                          {rentals[realIndex]?.rental_end <= currentDate && (
+                          {rentals[realIndex].rental_end <= currentDate ? (
                             <button
                               className="absolute bg-white px-4 py-2 rounded-xl shadow-xl z-50"
                               onClick={() => setActiveRentId(rent?.rent_id)}
                             >
                               Vote
                             </button>
-                          )}
+                          ) : null}
                           <img
                             src={rent.rent_cover}
                             alt={rent.rent_title}

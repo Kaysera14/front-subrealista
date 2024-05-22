@@ -15,7 +15,6 @@ import { getUserRents } from "../services/get-all-rents-by-username";
 import { CurrentUserContext } from "../context/auth-context";
 import Carousel from "../components/carousel";
 import { getAllImages } from "../services/get-all-images";
-import { getUserDataService } from "../services/get-user";
 import { useLogout } from "../hooks/use-logout";
 import { TenantsComents } from "../components/tenants-coments";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -25,12 +24,10 @@ export function UserPage() {
   const { username } = useParams();
   const [rents, setRents] = useState([]);
   const [images, setImages] = useState([]);
-  const [userToken, setUserToken] = useState();
   const [showMenu, setShowMenu] = useState(false);
-  const [user, setUser] = useState();
   const { userData } = useContext(CurrentUserContext);
   const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 768);
-  const shortDate = dayjs(userToken?.createdAt).format("DD/MM/YYYY");
+  const shortDate = dayjs(userData?.createdAt).format("DD/MM/YYYY");
 
   useEffect(() => {
     const handleResize = () => {
@@ -44,20 +41,9 @@ export function UserPage() {
     };
   }, []);
 
-  useEffect(() => {
-    if (userData !== undefined) {
-      setUserToken(userData);
-    }
-    const fetchUserData = async () => {
-      const noTokenUser = await getUserDataService(username);
-      setUser(noTokenUser);
-    };
-    fetchUserData();
-  }, [username, userData]);
-
   const fetchUserRents = useCallback(async () => {
-    if (user !== undefined) {
-      const result = await getUserRents(user?.username);
+    if (userData) {
+      const result = await getUserRents(userData?.username);
       if (result?.status === "ok") {
         setRents(result?.data);
 
@@ -87,13 +73,13 @@ export function UserPage() {
         setImages(uniqueImagesData);
       }
     }
-  }, [username, userToken, user]);
+  }, [username, userData]);
 
   useEffect(() => {
-    if (userToken !== undefined && user !== undefined) {
+    if (userData) {
       fetchUserRents();
     }
-  }, [userToken, user]);
+  }, [userData]);
 
   const handleLogOut = () => {
     localStorage.setItem("sawReservations", JSON.stringify([]));
@@ -121,7 +107,7 @@ export function UserPage() {
       <article className="flex w-full max-w-screen-2xl">
         <section className="flex flex-col w-full pb-10 md:flex-row border-b">
           <span className="flex flex-row w-full justify-between items-start mb-12 md:hidden">
-            {userToken?.username !== user?.username ? null : (
+            {username !== userData?.username ? null : (
               <button
                 onClick={() => setShowMenu(!showMenu)}
                 className={`flex flex-col absolute top-4 right-4 h-10 px-3 py-6 gap-2 border rounded-full justify-center items-center bg-white z-20 shadow-md mobile-menu-container`}
@@ -136,7 +122,7 @@ export function UserPage() {
                     <MenuList dense>
                       <MenuItem
                         onClick={() =>
-                          navigate(`/users/${userToken?.username}/update`)
+                          navigate(`/users/${userData?.username}/update`)
                         }
                       >
                         <ListItemText>Editar perfil</ListItemText>
@@ -174,21 +160,21 @@ export function UserPage() {
             <img
               className="w-32 h-32 rounded-full mx-auto object-cover"
               src={
-                user?.profilePic
-                  ? user?.profilePic
+                userData?.profilePic
+                  ? userData?.profilePic
                   : "/users/default_avatar.png"
               }
-              alt={"Foto de " + user?.username}
+              alt={"Foto de " + userData?.username}
             />
 
             <h2 className="text-center text-2xl font-semibold mt-3">
-              {user?.username}
+              {userData?.username}
             </h2>
             <h3 className="text-center text-gray-600 mt-1">
-              {user?.avg_rating ? (
+              {userData?.avg_rating ? (
                 <span className="flex align-middle justify-center">
-                  <Rating value={parseFloat(user?.avg_rating)} readOnly />
-                  <p>({user?.avg_rating})</p>
+                  <Rating value={parseFloat(userData?.avg_rating)} readOnly />
+                  <p>({userData?.avg_rating})</p>
                 </span>
               ) : (
                 "Sin valoraciones"
@@ -201,11 +187,13 @@ export function UserPage() {
           </span>
 
           <section className="flex flex-col px-10 w-full pt-4">
-            <h2 className="text-3xl font-bold text-center mt-5 md:text-start">{`Información de ${user?.username}`}</h2>
-            {userToken?.username !== user?.username ? null : (
+            <h2 className="text-3xl font-bold text-center mt-5 md:text-start">{`Información de ${userData?.username}`}</h2>
+            {username !== userData?.username ? null : (
               <span className="flex flex-row gap-5">
                 <button
-                  onClick={() => navigate(`/users/${user?.username}/update`)}
+                  onClick={() =>
+                    navigate(`/users/${userData?.username}/update`)
+                  }
                   className="hidden md:flex md:flex-col md:items-center md:text-xs md:mt-5 md:font-semibold md:justify-center md:w-full md:border md:border-black md:p-2 md:rounded-lg md:min-w-28 md:max-w-28 md:w-2/5"
                 >
                   Editar tu perfil
@@ -213,22 +201,24 @@ export function UserPage() {
               </span>
             )}
             <ul className="flex flex-col mt-5 gap-5">
-              {user ? (
-                user?.bio?.length || user?.address?.length !== 0 ? (
+              {userData ? (
+                userData?.bio?.length || userData?.address?.length !== 0 ? (
                   <React.Fragment>
-                    {user?.address && user?.address.length !== 0 && (
+                    {userData?.address && userData?.address.length !== 0 && (
                       <li className="flex flex-row gap-2">
                         <LocationOnIcon />
-                        <p>{user?.address}</p>
+                        <p>{userData?.address}</p>
                       </li>
                     )}
-                    {user?.bio && user?.bio.length !== 0 && <p>{user?.bio}</p>}
+                    {userData?.bio && user?.bio.length !== 0 && (
+                      <p>{userData?.bio}</p>
+                    )}
                   </React.Fragment>
                 ) : (
                   <p>
                     Aún no se han añadido datos en tu perfil,{" "}
                     <Link
-                      to={`/users/${user?.username}/update`}
+                      to={`/users/${userData?.username}/update`}
                       className="underline font-semibold"
                     >
                       haz click aquí
@@ -273,8 +263,8 @@ export function UserPage() {
         </ul>
       </section>
       <section className="flex flex-col w-full items-center justify-center mt-8">
-        <TenantsComents user={user} />
-        <OwnerComents user={user} />
+        <TenantsComents user={userData} />
+        <OwnerComents user={userData} />
       </section>
     </Main>
   );

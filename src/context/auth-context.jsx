@@ -12,7 +12,9 @@ export function AuthContextProvider({ children }) {
   useEffect(() => {
     const handleUser = async () => {
       if (user) {
-        const currentUser = await getUserDataService(user?.username);
+        const currentUser = await getUserDataService(
+          user?.username || user?.newUsername
+        );
         setUserData(currentUser);
       } else {
         setUserData(null);
