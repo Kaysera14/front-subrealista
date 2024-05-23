@@ -116,7 +116,7 @@ export function EditUserPage() {
 
   return (
     <Main>
-      <section className="flex flex-col justify-evenly items-center w-full">
+      <section className="flex flex-col justify-evenly items-center w-full md:h-[77vh]">
         <h1 className="text-4xl block self-center">Edita tu cuenta</h1>
         <UserEditForm
           setSelectedImage={setSelectedImage}
