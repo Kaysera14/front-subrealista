@@ -76,7 +76,7 @@ export const HeaderPc = ({
 
   return userData === null ? (
     <header className="hidden md:flex md:min-h-min md:w-full md:h-min md:fixed md:bottom-0 md:z-50 md:bg-[var(--primary-color)] md:top-0 md:sticky md:pt-2 md:pb-5 md:border-solid md:border-b-2 md:drop-shadow-sm">
-      <nav className="md:flex md:flex-col md:w-screen md:px-20 md:items-center md:h-min md:text-[var(--quintanary-color)] md:text-xs md:gap-y-1">
+      <nav className="md:flex md:flex-col md:px-20 md:items-center md:h-min md:text-[var(--quintanary-color)] md:text-xs md:gap-y-1">
         <section className="flex flex-row justify-between items-center w-full">
           <Link
             to="/"
@@ -109,7 +109,7 @@ export const HeaderPc = ({
     </header>
   ) : (
     <header className="min-h-min w-full h-min fixed bottom-0 z-50 bg-[var(--primary-color)] md:top-0 md:sticky md:pt-2 md:pb-5 md:border-solid md:border-b-2 md:drop-shadow-sm">
-      <nav className="hidden md:flex md:flex-col md:w-screen md:px-20 md:items-center md:h-min md:text-[var(--quintanary-color)] md:text-xs md:gap-y-1">
+      <nav className="hidden md:flex md:flex-col md:px-20 md:items-center md:h-min md:text-[var(--quintanary-color)] md:text-xs md:gap-y-1">
         <section className="flex flex-row justify-between items-center w-full">
           <Link
             to="/"

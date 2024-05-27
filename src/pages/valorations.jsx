@@ -156,8 +156,8 @@ export function Valoraciones() {
 
   return (
     <Main>
-      <section className="flex flex-col w-screen min-h-[64vh] items-center justify-center overflow-scroll md:max-w-[75rem] md:overflow-auto">
-        <section className="flex flex-col w-full items-center justify-center px-8 gap-12 bg-white md:max-w-[75rem] h-full">
+      <section className="flex flex-col items-center justify-center py-8">
+        <section className="flex flex-col w-full items-center justify-center gap-12 bg-white md:max-w-[75%] md:min-w-[45rem]">
           <aside className="flex flex-col w-full items-center justify-center">
             <h2 className="font-semibold text-2xl pb-2">Reservas</h2>
             {posts?.length !== 0 ? (
@@ -184,7 +184,6 @@ export function Valoraciones() {
             )}
           </aside>
         </section>
-        <section></section>
       </section>
     </Main>
   );

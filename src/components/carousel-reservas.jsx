@@ -9,6 +9,7 @@ import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 export default function CarouselReservas({ posts, rentals }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [dragStartX, setDragStartX] = useState(null);
+  const [groupSize, setGroupSize] = useState(window.innerWidth <= 1100 ? 2 : 3);
   const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 768);
   const navigate = useNavigate();
   const currentDate = dayjs().toISOString();
@@ -20,6 +21,7 @@ export default function CarouselReservas({ posts, rentals }) {
   useEffect(() => {
     const handleResize = () => {
       setIsMobileView(window.innerWidth <= 768);
+      setGroupSize(window.innerWidth <= 1100 ? 2 : 3);
     };
 
     window.addEventListener("resize", handleResize);
@@ -63,10 +65,10 @@ export default function CarouselReservas({ posts, rentals }) {
   const nextSlide = () => {
     setCurrentIndex((prevIndex) => {
       if (isMobileView) {
-        return prevIndex === posts.length - 1 ? 0 : prevIndex + 1;
+        return prevIndex === rentals.length - 1 ? 0 : prevIndex + 1;
       } else {
-        const newIndex = prevIndex + 1;
-        return newIndex >= posts.length ? 0 : newIndex;
+        const newIndex = prevIndex + groupSize;
+        return newIndex >= rentals.length ? 0 : newIndex;
       }
     });
   };
@@ -74,10 +76,10 @@ export default function CarouselReservas({ posts, rentals }) {
   const prevSlide = () => {
     setCurrentIndex((prevIndex) => {
       if (isMobileView) {
-        return prevIndex === 0 ? posts.length - 1 : prevIndex - 1;
+        return prevIndex === 0 ? rentals.length - 1 : prevIndex - 1;
       } else {
-        const newIndex = prevIndex - 1; // Retroceder solo un elemento
-        return newIndex < 0 ? posts.length - 1 : newIndex;
+        const newIndex = prevIndex - groupSize;
+        return newIndex < 0 ? rentals.length - 1 : newIndex;
       }
     });
   };
@@ -86,11 +88,13 @@ export default function CarouselReservas({ posts, rentals }) {
     setCurrentIndex(index);
   };
 
-  const numGroups = Math.ceil(posts?.length / 3); // Calcular el número de grupos de tres elementos
+  const numGroups = Math.ceil(posts.length / groupSize); // Calcular el número de grupos de tres elementos
   const groupIndexes = Array.from({ length: numGroups }, (_, i) => i);
 
+  console.log(numGroups, groupIndexes);
+
   return isMobileView ? (
-    <section className="w-full max-w-full relative">
+    <section className="w-full max-w-full relative overflow-hidden">
       <section
         className="carousel-reservas-container"
         onTouchStart={(e) => handleDragStart(e)}
@@ -181,25 +185,39 @@ export default function CarouselReservas({ posts, rentals }) {
   ) : (
     <section className="w-full max-w-full">
       <section
-        className="carousel-reservas-container overflow-hidden"
+        className="carousel-reservas-container"
         onTouchStart={(e) => handleDragStart(e)}
         onTouchMove={(e) => handleDragMove(e)}
         onTouchEnd={(e) => handleDragEnd(e)}
       >
         <ul
-          className="carousel-reservas-inner z-0 flex flex-row transition-transform w-full"
-          style={{ transform: `translateX(-${currentIndex * 33.33}%)` }}
+          className="carousel-reservas-inner overflow-x-hidden z-0 flex flex-row transition-transform w-full"
+          style={{
+            transform: `translateX(-${currentIndex * (100 / groupSize)}%)`,
+          }}
         >
           {groupIndexes?.map((groupIndex) => (
-            <li key={groupIndex} className="flex flex-row min-w-full">
+            <li
+              key={groupIndex}
+              className={`flex flex-row min-w-full ${
+                window.innerWidth <= 1100 ? "justify-center" : "justify-auto"
+              }`}
+            >
               {posts
-                .slice(groupIndex * 3, groupIndex * 3 + 3)
+                .slice(
+                  groupIndex * groupSize,
+                  groupIndex * groupSize + groupSize
+                )
                 .map((rent, index) => {
-                  const realIndex = groupIndex * 3 + index;
+                  const realIndex = groupIndex * groupSize + index;
 
                   return (
                     <section
-                      className="carousel-reservas-item flex flex-col max-w-[33%] justify-center items-center py-8"
+                      className={`carousel-reservas-item flex flex-col justify-center items-center py-8 ${
+                        window.innerWidth <= 1100
+                          ? "max-w-[50%]"
+                          : "max-w-[33%]"
+                      }`}
                       key={index}
                     >
                       <aside className="flex flex-col relative">

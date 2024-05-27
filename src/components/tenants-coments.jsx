@@ -7,7 +7,7 @@ import { getUserDataService } from "../services/get-user";
 export function TenantsComents({ post, user }) {
   const [ratings, setRatings] = useState([]);
   const [tenant, setTenant] = useState();
-  const { username } = useParams();
+  const { username, id } = useParams();
 
   useEffect(() => {
     if (user || post) {
@@ -43,14 +43,14 @@ export function TenantsComents({ post, user }) {
   }, [user, post]);
 
   return ratings && ratings?.length !== 0 ? (
-    <aside className="flex flex-col py-6 pb-8 gap-2 bg-[--tertiary-color] rounded-t-md w-full max-w-full md:max-w-[50%]">
-      <h3
-        className={`text-2xl font-bold mb-5 ${
-          username?.length !== 0 ? "pl-6" : ""
-        }`}
-      >
+    <aside
+      className={`flex flex-col py-6 pb-8 gap-2 bg-[--tertiary-color] w-full max-w-full ${
+        !id ? "md:max-w-[60%]" : "md:max-w-full"
+      }`}
+    >
+      <h3 className={`text-2xl font-bold mb-5 ${username ? "pl-6" : ""}`}>
         {`${
-          username?.length > 0
+          username
             ? `Valoraciones de ${username}`
             : "Valoraciones de tu anfitrión"
         }`}
@@ -59,14 +59,14 @@ export function TenantsComents({ post, user }) {
       <CarouselComents ratings={ratings} tenant={tenant} />
     </aside>
   ) : (
-    <aside className="flex flex-col py-6 pb-8 gap-2 bg-[--tertiary-color] rounded-t-md w-full max-w-full md:max-w-[50%]">
-      <h3
-        className={`text-2xl font-bold mb-5 ${
-          username?.length !== 0 ? "pl-6" : ""
-        }`}
-      >
+    <aside
+      className={`flex flex-col py-6 pb-8 gap-2 bg-[--tertiary-color] w-full max-w-full ${
+        !id ? "md:max-w-[60%]" : "md:max-w-full"
+      }`}
+    >
+      <h3 className={`text-2xl font-bold mb-5 ${username ? "pl-6" : ""}`}>
         {`${
-          username?.length > 0
+          username
             ? `Valoraciones de ${username}`
             : "Valoraciones de tu anfitrión"
         }`}

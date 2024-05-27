@@ -15,23 +15,26 @@ export function Footer() {
   };
 
   const username = getUsernameFromPathname();
-
   const usernameUpdate = getUsernameUpdateFromPathname();
+
+  const isStatic =
+    [
+      "/",
+      "/register",
+      `/users/${username}`,
+      `/users/${usernameUpdate}/update`,
+    ].includes(location.pathname) ||
+    location.pathname.includes("/rent/") ||
+    location.pathname.includes("/rent-create") ||
+    location.pathname.includes("/valorations");
 
   return (
     <footer
-      className={`px-5 static bottom-0 pb-16 z-0 w-full bg-[var(--secondary-color)] md:pb-0 md:px-0 ${
-        location.pathname === "/" ||
-        location.pathname === "/register" ||
-        location.pathname === `/users/${username}` ||
-        location.pathname === `/users/${usernameUpdate}/update` ||
-        location.pathname.includes("/rent/") ||
-        location.pathname.includes("/valorations")
-          ? "static"
-          : "fixed bottom-0"
+      className={`px-5 pb-16 w-full bg-[var(--secondary-color)] md:pb-0 md:px-0 ${
+        isStatic ? "static" : "fixed bottom-0"
       }`}
     >
-      {/*Apartado about, privacidad, condiciones de uso*/}
+      {/* Apartado about, privacidad, condiciones de uso */}
       <section className="py-5 flex flex-col-reverse gap-7 border-solid border-t-2">
         <nav className="flex items-center justify-start text-xs font-normal md:items-center md:justify-center">
           <span className="flex flex-col gap-x-1 gap-1 md:flex-row md:gap-x-2">

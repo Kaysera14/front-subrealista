@@ -6,7 +6,7 @@ export const RentType = ({ stepData, setStepData }) => {
     setStepData({ ...stepData, rent_type: rentType });
   };
   return (
-    <section className="flex flex-col w-full items-center justify-evenly">
+    <section className="flex flex-col w-full items-center justify-evenly gap-8 mb-8">
       <h2 className="font-semibold text-2xl md:text-3xl">
         Selecciona el tipo de renta
       </h2>

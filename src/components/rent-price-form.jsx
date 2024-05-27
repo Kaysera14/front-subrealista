@@ -1,11 +1,13 @@
 import { Input } from "@mui/material";
 
 import { useEffect, useState } from "react";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 
 export const RentPriceForm = ({ setStepData, stepData }) => {
   const [basePrice, setBasePrice] = useState(
     stepData.basePrice !== undefined ? stepData.basePrice : 0
   );
+  const [show, setShow] = useState(false);
   const commision = basePrice !== 0 ? (basePrice * 28) / 100 : 0;
   const totalPrice = basePrice !== 0 ? basePrice + (basePrice * 28) / 100 : 0;
 
@@ -37,9 +39,21 @@ export const RentPriceForm = ({ setStepData, stepData }) => {
 
   return (
     <section className="flex flex-col w-full items-center justify-evenly">
-      <h2 className="font-semibold text-2xl md:text-3xl">
-        Precio y disponibilidad
-      </h2>
+      <span className="flex flex-row-reverse items-center justify-center gap-2">
+        <h2 className="font-semibold text-2xl md:text-3xl">
+          Precio y disponibilidad
+        </h2>
+        <section className="relative" onClick={() => setShow(!show)}>
+          <InfoOutlinedIcon sx={{ height: "2rem", width: "2rem" }} />
+          {show && (
+            <aside className="absolute top-8 left-8 shadow-md p-4 bg-white min-w-64 rounded-md border md:top-8 md:right-8 md:left-auto">
+              <p className="text-sm">
+                El precio introducido será el precio por noche de tu vivienda
+              </p>
+            </aside>
+          )}
+        </section>
+      </span>
       <form className="flex flex-col gap-8 w-6/12 items-center justify-center max-w-fit md:w-8/12">
         <label className="flex flex-col font-semibold w-full">
           Precio Base

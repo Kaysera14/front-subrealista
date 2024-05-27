@@ -11,6 +11,7 @@ import { PaymentGateway } from "../components/payment-gateway";
 import { Alert, Stack } from "@mui/material";
 import { CostsMobile } from "../components/costs-mobile";
 import { CurrentUserContext } from "../context/auth-context";
+import { Main } from "../components/main";
 
 export function PostPage({ setSuccess, success }) {
   const [post, setPost] = useState();
@@ -108,83 +109,87 @@ export function PostPage({ setSuccess, success }) {
   return (
     post &&
     (payActive ? (
-      <section className="flex flex-col items-center justify-center w-full">
-        {dateValue.length !== 0 && (
-          <PaymentGateway
-            payActive={payActive}
-            setPayActive={setPayActive}
-            post={post}
-            dateValue={dateValue}
-            rooms={rooms}
-            daysDiff={daysDiff}
-            images={images}
-            setSuccess={setSuccess}
-            setError={setError}
-          />
-        )}
-      </section>
-    ) : (
-      <section className="flex flex-col items-center justify-center w-full">
-        <PcGallery
-          images={images}
-          active={active}
-          setActive={setActive}
-          post={post}
-        />
-        <section className="flex flex-col md:flex-row md:max-w-[1280px] pb-6">
-          <MobileGallery images={images} post={post} navigate={navigate} />
-          <RentData
-            user={user}
-            post={post}
-            services={services}
-            disableDate={disableDate}
-            dateValue={dateValue}
-            setDateValue={setDateValue}
-          />
-          <RentPrice
-            formatDate={formatDate}
-            dateValue={dateValue}
-            post={post}
-            rooms={rooms}
-            setRooms={setRooms}
-            daysDiff={daysDiff}
-            images={images}
-            error={error}
-            setError={setError}
-            handlePassToPayForm={handlePassToPayForm}
-          />
-          <CostsMobile
-            post={post}
-            daysDiff={daysDiff}
-            dateValue={dateValue}
-            handlePassToPayForm={handlePassToPayForm}
-            error={error}
-            setError={setError}
-            isMobileView={isMobileView}
-          />
+      <Main>
+        <section className="flex flex-col items-center justify-center w-full">
+          {dateValue.length !== 0 && (
+            <PaymentGateway
+              payActive={payActive}
+              setPayActive={setPayActive}
+              post={post}
+              dateValue={dateValue}
+              rooms={rooms}
+              daysDiff={daysDiff}
+              images={images}
+              setSuccess={setSuccess}
+              setError={setError}
+            />
+          )}
         </section>
-        {isMobileView && error ? (
-          <Stack
-            sx={{
-              width: "60%",
-              position: "fixed",
-              zIndex: "20",
-              bottom: "0",
-              right: "0",
-              backgroundColor: "white",
-            }}
-            spacing={2}
-          >
-            <Alert
-              variant="outlined"
-              severity="warning"
-              onClose={() => setError("")}
+      </Main>
+    ) : (
+      <Main>
+        <section className="flex flex-col items-center justify-center w-full">
+          <PcGallery
+            images={images}
+            active={active}
+            setActive={setActive}
+            post={post}
+          />
+          <section className="flex flex-col md:flex-row md:max-w-[1280px] pb-6">
+            <MobileGallery images={images} post={post} navigate={navigate} />
+            <RentData
+              user={user}
+              post={post}
+              services={services}
+              disableDate={disableDate}
+              dateValue={dateValue}
+              setDateValue={setDateValue}
+            />
+            <RentPrice
+              formatDate={formatDate}
+              dateValue={dateValue}
+              post={post}
+              rooms={rooms}
+              setRooms={setRooms}
+              daysDiff={daysDiff}
+              images={images}
+              error={error}
+              setError={setError}
+              handlePassToPayForm={handlePassToPayForm}
+            />
+            <CostsMobile
+              post={post}
+              daysDiff={daysDiff}
+              dateValue={dateValue}
+              handlePassToPayForm={handlePassToPayForm}
+              error={error}
+              setError={setError}
+              isMobileView={isMobileView}
+            />
+          </section>
+          {isMobileView && error ? (
+            <Stack
+              sx={{
+                width: "60%",
+                position: "fixed",
+                zIndex: "20",
+                bottom: "0",
+                right: "0",
+                backgroundColor: "white",
+              }}
+              spacing={2}
             >
-              {error}
-            </Alert>
-          </Stack>
-        ) : null}
-      </section>
+              <Alert
+                variant="outlined"
+                severity="warning"
+                onClose={() => setError("")}
+              >
+                {error}
+              </Alert>
+            </Stack>
+          ) : null}
+        </section>
+      </Main>
     ))
   );
 }

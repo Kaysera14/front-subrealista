@@ -67,7 +67,7 @@ export function RentData({
       {/*Calendario*/}
       <aside className="flex flex-col mx-8 py-6 gap-2 border-t mb-5">
         <h3 className="text-2xl font-bold mb-5">
-          ¿Cuándo está ocupada la vivienda?
+          ¿Cuándo está disponible la vivienda?
         </h3>
         <Fecha
           active={true}

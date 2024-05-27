@@ -124,7 +124,7 @@ export const UsersReservations = () => {
             return (
               <li
                 key={reservation.rental_id}
-                className="flex flex-col w-full relative h-full items-center bg-orange-50 py-4 px-4 justify-between md:w-[85%] md:flex-row md:items-start"
+                className="flex flex-col w-full relative h-full items-center bg-orange-50 py-4 px-4 justify-between md:w-[85%] md:flex-row md:items-start md:h-fit"
               >
                 <aside className="flex flex-col w-full md:w-fit md:h-full">
                   <h3 className="text-lg font-bold mb-4 md:text-xl">{`${reservation.rent_title} - ${reservation.rent_location}`}</h3>

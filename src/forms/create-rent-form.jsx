@@ -142,74 +142,76 @@ export const CreateRentForm = () => {
 
   return (
     <Main>
-      <section className="flex flex-row w-full h-[58vh] space-between md:h-[63vh]">
-        {activeStep === 0 && (
-          <RentType setStepData={setStepData} stepData={stepData} />
-        )}
-        {activeStep === 1 && (
-          <RentLocation setStepData={setStepData} stepData={stepData} />
-        )}
-        {activeStep === 2 && (
-          <RentInfo setStepData={setStepData} stepData={stepData} />
-        )}
-        {activeStep === 3 && (
-          <RentServices setStepData={setStepData} stepData={stepData} />
-        )}
-        {activeStep === 4 && (
-          <RentImages setStepData={setStepData} stepData={stepData} />
-        )}
-        {activeStep === 5 && (
-          <RentPriceForm setStepData={setStepData} stepData={stepData} />
-        )}
-        {error ? (
-          <section className="fixed bottom-[64px] right-0 w-full z-20 bg-white md:bottom-0 md:w-6/12">
-            <Stack spacing={2}>
-              <Alert
-                variant="outlined"
-                severity="warning"
-                onClose={() => setError("")}
+      <section className="flex flex-col w-[90%] self-center items-center justify-center py-8">
+        <section className="flex flex-row w-full space-between min-h-[40rem] max-h-[40rem] md:min-h-[36rem] md:max-h-[36rem]">
+          {activeStep === 0 && (
+            <RentType setStepData={setStepData} stepData={stepData} />
+          )}
+          {activeStep === 1 && (
+            <RentLocation setStepData={setStepData} stepData={stepData} />
+          )}
+          {activeStep === 2 && (
+            <RentInfo setStepData={setStepData} stepData={stepData} />
+          )}
+          {activeStep === 3 && (
+            <RentServices setStepData={setStepData} stepData={stepData} />
+          )}
+          {activeStep === 4 && (
+            <RentImages setStepData={setStepData} stepData={stepData} />
+          )}
+          {activeStep === 5 && (
+            <RentPriceForm setStepData={setStepData} stepData={stepData} />
+          )}
+          {error ? (
+            <section className="fixed bottom-[64px] right-0 w-full z-20 bg-white md:bottom-0 md:w-6/12">
+              <Stack spacing={2}>
+                <Alert
+                  variant="outlined"
+                  severity="warning"
+                  onClose={() => setError("")}
+                >
+                  {error}
+                </Alert>
+              </Stack>
+            </section>
+          ) : null}
+        </section>
+        <section className="flex flex-col w-full">
+          <MobileStepper
+            variant="progress"
+            steps={6}
+            position="static"
+            activeStep={activeStep}
+          />
+          <section
+            className={`flex flex-row w-full ${
+              activeStep !== 0 ? "justify-between" : "justify-end"
+            }`}
+          >
+            {activeStep !== 0 && (
+              <button
+                className="flex flex-col text-center w-fit bg-black text-white p-4 rounded-md"
+                onClick={handleBack}
               >
-                {error}
-              </Alert>
-            </Stack>
+                Atrás
+              </button>
+            )}
+            {activeStep === 5 ? (
+              <button
+                className="flex flex-col text-center w-fit bg-black text-white p-4 rounded-md"
+                onClick={onSubmit}
+              >
+                Enviar formulario
+              </button>
+            ) : (
+              <button
+                className="flex flex-col text-center w-fit bg-black text-white p-4 rounded-md"
+                onClick={handleNext}
+              >
+                Siguiente
+              </button>
+            )}
           </section>
-        ) : null}
-      </section>
-      <section className="flex flex-col w-full">
-        <MobileStepper
-          variant="progress"
-          steps={6}
-          position="static"
-          activeStep={activeStep}
-        />
-        <section
-          className={`flex flex-row w-full ${
-            activeStep !== 0 ? "justify-between" : "justify-end"
-          }`}
-        >
-          {activeStep !== 0 && (
-            <button
-              className="flex flex-col text-center w-fit bg-black text-white p-4 rounded-md"
-              onClick={handleBack}
-            >
-              Atrás
-            </button>
-          )}
-          {activeStep === 5 ? (
-            <button
-              className="flex flex-col text-center w-fit bg-black text-white p-4 rounded-md"
-              onClick={onSubmit}
-            >
-              Enviar formulario
-            </button>
-          ) : (
-            <button
-              className="flex flex-col text-center w-fit bg-black text-white p-4 rounded-md"
-              onClick={handleNext}
-            >
-              Siguiente
-            </button>
-          )}
         </section>
       </section>
     </Main>

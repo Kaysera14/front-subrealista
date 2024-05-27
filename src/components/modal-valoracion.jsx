@@ -42,7 +42,7 @@ export function ModalValoracion({
   }
 
   return (
-    <section className="flex flex-col relative w-10/12 items-center justify-center bg-white rounded-lg  p-16 md:w-6/12">
+    <section className="flex flex-col relative w-10/12 items-center justify-center bg-white rounded-lg p-16 md:w-6/12">
       <button
         onClick={() => setActiveRentId(null)}
         type="button"

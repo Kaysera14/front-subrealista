@@ -8,11 +8,11 @@ import {
 
 export const RentInfo = ({ stepData, setStepData }) => {
   return (
-    <section className="flex flex-col w-full items-center justify-evenly">
-      <h2 className="font-semibold text-2xl md:text-3xl">
+    <section className="flex flex-col w-full items-center justify-center justify-evenly">
+      <h2 className="font-semibold text-center text-2xl md:text-3xl">
         Añade información básica sobre tu espacio
       </h2>
-      <section className="flex flex-col w-full items-start justify-center gap-8 md:gap-24 md:flex-row">
+      <section className="flex flex-col w-full items-center justify-center gap-8 md:gap-24 md:items-start md:flex-row">
         <section className="flex flex-col gap-8">
           <FormControl fullWidth>
             <h3 className="font-semibold text-md mb-2 md:text-xl">

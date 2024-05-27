@@ -171,7 +171,7 @@ export const RentLocation = ({ stepData, setStepData }) => {
         </button>
       </form>
       {position?.length !== 0 && (
-        <section className="w-full h-[45vh] md:h-[64vh]">
+        <section className="w-full h-[36rem] md:h-[31rem]">
           <MapContainer
             center={position}
             zoom={13}

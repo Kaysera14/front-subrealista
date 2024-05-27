@@ -68,7 +68,7 @@
 }
 
 .prev-comment-user-btn {
-  left: 4rem;
+  left: 1rem;
   visibility: visible;
 }
 
@@ -78,7 +78,7 @@
 }
 
 .next-comment-user-btn {
-  right: 4rem;
+  right: 1rem;
   visibility: visible;
 }
 

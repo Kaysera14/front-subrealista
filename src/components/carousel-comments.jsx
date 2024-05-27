@@ -7,11 +7,13 @@ export default function CarouselComents({ ratings, tenant }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [dragStartX, setDragStartX] = useState(null);
   const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 768);
+  const [groupSize, setGroupSize] = useState(window.innerWidth <= 1100 ? 2 : 3);
   const { username } = useParams();
 
   useEffect(() => {
     const handleResize = () => {
       setIsMobileView(window.innerWidth <= 768);
+      setGroupSize(window.innerWidth <= 1100 ? 2 : 3);
     };
 
     window.addEventListener("resize", handleResize);
@@ -48,7 +50,7 @@ export default function CarouselComents({ ratings, tenant }) {
     }
   };
 
-  const handleDragEnd = (e) => {
+  const handleDragEnd = () => {
     setDragStartX(null);
   };
 
@@ -57,7 +59,7 @@ export default function CarouselComents({ ratings, tenant }) {
       if (isMobileView) {
         return prevIndex === ratings.length - 1 ? 0 : prevIndex + 1;
       } else {
-        const newIndex = prevIndex + 3;
+        const newIndex = prevIndex + groupSize;
         return newIndex >= ratings.length ? 0 : newIndex;
       }
     });
@@ -68,7 +70,7 @@ export default function CarouselComents({ ratings, tenant }) {
       if (isMobileView) {
         return prevIndex === 0 ? ratings.length - 1 : prevIndex - 1;
       } else {
-        const newIndex = prevIndex - 3;
+        const newIndex = prevIndex - groupSize;
         return newIndex < 0 ? ratings.length - 1 : newIndex;
       }
     });
@@ -78,10 +80,10 @@ export default function CarouselComents({ ratings, tenant }) {
     setCurrentIndex(index);
   };
 
-  const numGroups = Math.ceil(ratings?.length / 2); // Calcular el número de grupos de tres elementos
+  const numGroups = Math.ceil(ratings.length / groupSize);
   const groupIndexes = Array.from({ length: numGroups }, (_, i) => i);
 
-  return isMobileView && ratings?.length !== 0 ? (
+  return isMobileView && ratings.length !== 0 ? (
     <section className="relative w-full max-w-full">
       <section
         className="carousel-comments-container"
@@ -93,44 +95,39 @@ export default function CarouselComents({ ratings, tenant }) {
           className="carousel-comments-inner z-0"
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         >
-          {ratings &&
-            ratings?.map((rating, index) => {
-              return (
-                <li
-                  className="carousel-comments-item flex flex-col w-full justify-center items-center py-8"
-                  key={index}
-                >
-                  <aside
-                    className={`flex flex-col bg-white w-fit p-5 rounded-xl shadow-xl ${
-                      username?.length > 0 ? "w-7/12" : "w-full"
+          {ratings.map((rating, index) => (
+            <li
+              className="carousel-comments-item flex flex-col w-full justify-center items-center py-8"
+              key={index}
+            >
+              <aside
+                className={`flex flex-col bg-white w-fit p-5 rounded-xl shadow-xl ${
+                  username ? "w-7/12" : "w-full"
+                }`}
+              >
+                <span className="flex flex-row items-center gap-2">
+                  <img
+                    src={`${
+                      tenant?.length !== 0 &&
+                      (tenant[index].profilePic !== null) | undefined
+                        ? tenant[index].profilePic
+                        : "/users/default_avatar.png"
                     }`}
-                  >
-                    <span className="flex flex-row items-center gap-2">
-                      <img
-                        src={`${
-                          tenant?.length !== 0 &&
-                          (tenant[index].profilePic !== null) | undefined
-                            ? tenant[index].profilePic
-                            : "/users/default_avatar.png"
-                        }`}
-                        className="rounded-full w-1/12"
-                      />
-                      <h3 className="font-semibold text-lg">
-                        {rating?.tenant}
-                      </h3>
-                    </span>
-                    <span className="flex flex-col items-center justify-center gap-2">
-                      <Rating
-                        value={parseFloat(rating?.rating)}
-                        name="size-medium"
-                        readOnly
-                      />
-                      <p>{rating.comments}</p>
-                    </span>
-                  </aside>
-                </li>
-              );
-            })}
+                    className="rounded-full w-1/12"
+                  />
+                  <h3 className="font-semibold text-lg">{rating?.tenant}</h3>
+                </span>
+                <span className="flex flex-col items-center justify-center gap-2">
+                  <Rating
+                    value={parseFloat(rating?.rating)}
+                    name="size-medium"
+                    readOnly
+                  />
+                  <p>{rating.comments}</p>
+                </span>
+              </aside>
+            </li>
+          ))}
         </ul>
 
         <span
@@ -147,41 +144,45 @@ export default function CarouselComents({ ratings, tenant }) {
         </span>
       </section>
       <aside className="carousel-comments-dots">
-        {ratings &&
-          ratings?.map((_, index) => (
-            <span
-              key={index}
-              className={`comments-dot ${
-                index === currentIndex ? "active-dot" : ""
-              }`}
-              onClick={() => goToSlide(index)}
-            />
-          ))}
+        {ratings.map((_, index) => (
+          <span
+            key={index}
+            className={`comments-dot ${
+              index === currentIndex ? "active-dot" : ""
+            }`}
+            onClick={() => goToSlide(index)}
+          />
+        ))}
       </aside>
     </section>
   ) : (
     <section className="relative w-full max-w-full px-6">
       <section
-        className="carousel-comments-container overflow-hidden w-full"
+        className="max-w-[90%] carousel-comments-container overflow-hidden w-full"
         onTouchStart={(e) => handleDragStart(e)}
         onTouchMove={(e) => handleDragMove(e)}
         onTouchEnd={(e) => handleDragEnd(e)}
       >
         <ul
           className="carousel-comments-inner z-0 flex flex-row transition-transform w-full"
-          style={{ transform: `translateX(-${currentIndex * 33.33}%)` }}
+          style={{
+            transform: `translateX(-${currentIndex * (100 / groupSize)}%)`,
+          }}
         >
-          {groupIndexes?.map((groupIndex) => (
+          {groupIndexes.map((groupIndex) => (
             <li
               key={groupIndex}
               className="flex flex-row justify-center min-w-[100%] w-[100%] gap-4 "
             >
               {ratings
-                .slice(groupIndex * 3, groupIndex * 3 + 3)
+                .slice(
+                  groupIndex * groupSize,
+                  groupIndex * groupSize + groupSize
+                )
                 .map((rating, index) => (
                   <section
                     className={`carousel-comments-item-pc flex flex-col justify-center items-center py-8 ${
-                      username?.length !== 0 ? "max-w-80" : "max-w-full"
+                      username ? "max-w-70" : "max-w-full"
                     }`}
                     key={index}
                   >
@@ -238,9 +239,9 @@ export default function CarouselComents({ ratings, tenant }) {
           <span
             key={index}
             className={`comments-dot ${
-              index === Math.floor(currentIndex / 3) ? "active-dot" : ""
+              index === Math.floor(currentIndex / groupSize) ? "active-dot" : ""
             }`}
-            onClick={() => goToSlide(index * 3)}
+            onClick={() => goToSlide(index * groupSize)}
           />
         ))}
       </aside>
