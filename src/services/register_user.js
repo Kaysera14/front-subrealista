@@ -6,7 +6,7 @@ export async function registerUser(userData) {
   const json = await response.json();
 
   if (json?.status !== "ok") {
-    throw new Error(json.message);
+    return json;
   }
   return json;
 }

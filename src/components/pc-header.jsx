@@ -75,9 +75,9 @@ export const HeaderPc = ({
   }, [alertsActive, setAlertsActive]);
 
   return userData === null ? (
-    <header className="hidden md:flex md:min-h-min md:w-full md:h-min md:fixed md:bottom-0 md:z-50 md:bg-[var(--primary-color)] md:top-0 md:sticky md:pt-2 md:pb-5 md:border-solid md:border-b-2 md:drop-shadow-sm">
-      <nav className="md:flex md:flex-col md:px-20 md:items-center md:h-min md:text-[var(--quintanary-color)] md:text-xs md:gap-y-1">
-        <section className="flex flex-row justify-between items-center w-full">
+    <header className="hidden md:flex md:min-w-[100%] md:min-h-min md:h-min md:fixed md:bottom-0 md:z-50 md:bg-[var(--primary-color)] md:top-0 md:sticky md:pt-2 md:pb-5 md:border-solid md:border-b-2 md:drop-shadow-sm">
+      <nav className="md:flex md:flex-col md:min-w-[100%] md:px-20 md:items-center md:h-min md:text-[var(--quintanary-color)] md:text-xs md:gap-y-1">
+        <section className="flex flex-row md:min-w-[100%] justify-between items-center w-full">
           <Link
             to="/"
             onClick={() => handleLogoClick()}

@@ -91,8 +91,10 @@ export function NewUserPage({ setEmail }) {
 
       const registrationSuccessful = await registerUser(formDataToSend);
 
-      if (registrationSuccessful) {
+      if (registrationSuccessful?.status === "ok") {
         navigate("/validate");
+      } else {
+        setError(registrationSuccessful?.message);
       }
     } else {
       setError("Las contraseñas no coinciden");
@@ -101,7 +103,7 @@ export function NewUserPage({ setEmail }) {
 
   return (
     <Main>
-      <section className="flex flex-col w-full items-center justify-center md:h-[77vh]">
+      <section className="flex flex-col w-full items-center justify-center">
         <h1 className="text-4xl block self-center mb-5">Crea tu cuenta</h1>
         <RegistrationForm
           formData={formData}
@@ -133,7 +135,7 @@ export function NewUserPage({ setEmail }) {
             </Alert>
           </Stack>
         ) : null}
-        <p className="flex justify-center gap-2 mt-5">
+        <p className="flex justify-center gap-2 mt-5 mb-4">
           ¿Ya tienes una cuenta?
           <Link to="/login" style={{ color: "var(--quaternary-color)" }}>
             ¡Inicia sesión!
