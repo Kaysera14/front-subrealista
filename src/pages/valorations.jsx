@@ -69,7 +69,6 @@ export function Valoraciones() {
           const postsArray = await Promise.all(
             rentals.map(async (rental) => {
               const postData = await getRentData(rental.rental_rent_id);
-              console.log(postData);
               if (postData.status === "ok") {
                 return postData.data.result;
               } else {
