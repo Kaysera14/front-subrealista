@@ -22,14 +22,15 @@ export const RentServices = ({ setStepData, stepData }) => {
   };
 
   return (
-    <section className="flex flex-col w-full items-center justify-evenly">
+    <section className="flex flex-col w-full items-center justify-evenly px-8">
       <h2 className="font-semibold text-2xl md:text-3xl">
         Selecciona los servicios
       </h2>
 
       <section className="grid grid-cols-2 gap-2">
         <FormControlLabel
-          className="border shadow-md rounded-md px-2"
+          className="flex flex-row items-center border shadow-md rounded-md px-2"
+          sx={{ margin: 0 }}
           control={
             <Checkbox
               checked={stepData.elevator}
@@ -42,6 +43,7 @@ export const RentServices = ({ setStepData, stepData }) => {
         />
         <FormControlLabel
           className="border shadow-md rounded-md px-2"
+          sx={{ margin: 0 }}
           control={
             <Checkbox
               checked={stepData.near_beach}
@@ -54,6 +56,7 @@ export const RentServices = ({ setStepData, stepData }) => {
         />
         <FormControlLabel
           className="border shadow-md rounded-md px-2"
+          sx={{ margin: 0 }}
           control={
             <Checkbox
               checked={stepData.near_mountain}
@@ -66,6 +69,7 @@ export const RentServices = ({ setStepData, stepData }) => {
         />
         <FormControlLabel
           className="border shadow-md rounded-md px-2"
+          sx={{ margin: 0 }}
           control={
             <Checkbox
               checked={stepData.hairdryer}
@@ -78,6 +82,7 @@ export const RentServices = ({ setStepData, stepData }) => {
         />
         <FormControlLabel
           className="border shadow-md rounded-md px-2"
+          sx={{ margin: 0 }}
           control={
             <Checkbox
               checked={stepData.washing_machine}
@@ -92,6 +97,7 @@ export const RentServices = ({ setStepData, stepData }) => {
         />
         <FormControlLabel
           className="border shadow-md rounded-md px-2"
+          sx={{ margin: 0 }}
           control={
             <Checkbox
               checked={stepData.ac}
@@ -104,6 +110,7 @@ export const RentServices = ({ setStepData, stepData }) => {
         />
         <FormControlLabel
           className="border shadow-md rounded-md px-2"
+          sx={{ margin: 0 }}
           control={
             <Checkbox
               checked={stepData.smoke_detector}
@@ -116,6 +123,7 @@ export const RentServices = ({ setStepData, stepData }) => {
         />
         <FormControlLabel
           className="border shadow-md rounded-md px-2"
+          sx={{ margin: 0 }}
           control={
             <Checkbox
               checked={stepData.first_kit_aid}
@@ -130,6 +138,7 @@ export const RentServices = ({ setStepData, stepData }) => {
         />
         <FormControlLabel
           className="border shadow-md rounded-md px-2"
+          sx={{ margin: 0 }}
           control={
             <Checkbox
               checked={stepData.wifi}
@@ -142,6 +151,7 @@ export const RentServices = ({ setStepData, stepData }) => {
         />
         <FormControlLabel
           className="border shadow-md rounded-md px-2"
+          sx={{ margin: 0 }}
           control={
             <Checkbox
               checked={stepData.refrigerator}
@@ -154,6 +164,7 @@ export const RentServices = ({ setStepData, stepData }) => {
         />
         <FormControlLabel
           className="border shadow-md rounded-md px-2"
+          sx={{ margin: 0 }}
           control={
             <Checkbox
               checked={stepData.freezer}
@@ -166,6 +177,7 @@ export const RentServices = ({ setStepData, stepData }) => {
         />
         <FormControlLabel
           className="border shadow-md rounded-md px-2"
+          sx={{ margin: 0 }}
           control={
             <Checkbox
               checked={stepData.toaster}
@@ -180,6 +192,7 @@ export const RentServices = ({ setStepData, stepData }) => {
         />
         <FormControlLabel
           className="border shadow-md rounded-md px-2"
+          sx={{ margin: 0 }}
           control={
             <Checkbox
               checked={stepData.fully_equipped}

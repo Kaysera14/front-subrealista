@@ -40,15 +40,14 @@ export const RentPriceForm = ({ setStepData, stepData }) => {
   return (
     <section className="flex flex-col w-full items-center justify-evenly">
       <span className="flex flex-row-reverse items-center justify-center gap-2">
-        <h2 className="font-semibold text-2xl md:text-3xl">
-          Precio y disponibilidad
-        </h2>
+        <h2 className="font-semibold text-2xl md:text-3xl">Precio por noche</h2>
         <section className="relative" onClick={() => setShow(!show)}>
           <InfoOutlinedIcon sx={{ height: "2rem", width: "2rem" }} />
           {show && (
             <aside className="absolute top-8 left-8 shadow-md p-4 bg-white min-w-64 rounded-md border md:top-8 md:right-8 md:left-auto">
               <p className="text-sm">
-                El precio introducido será el precio por noche de tu vivienda
+                El precio introducido será el precio por noche de tu vivienda,
+                no mensual.
               </p>
             </aside>
           )}

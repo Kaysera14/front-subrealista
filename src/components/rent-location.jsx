@@ -127,7 +127,7 @@ export const RentLocation = ({ stepData, setStepData }) => {
     }
   };
   return (
-    <section className="flex flex-col relative w-full items-center justify-evenly">
+    <section className="flex flex-col relative w-full items-center justify-evenly md:px-16">
       <h2 className="font-semibold text-2xl md:text-3xl">
         Ingresa tu dirección
       </h2>

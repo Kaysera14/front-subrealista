@@ -142,8 +142,8 @@ export const CreateRentForm = () => {
 
   return (
     <Main>
-      <section className="flex flex-col w-[90%] self-center items-center justify-center py-8">
-        <section className="flex flex-row w-full space-between min-h-[40rem] max-h-[40rem] md:min-h-[36rem] md:max-h-[36rem]">
+      <section className="flex flex-col w-full min-h-[100%] self-center items-center justify-center py-8">
+        <section className="flex flex-row w-full space-between min-h-[70vh] max-h-[70vh] md:min-h-[65vh] md:max-h-[66vh]">
           {activeStep === 0 && (
             <RentType setStepData={setStepData} stepData={stepData} />
           )}
@@ -176,7 +176,7 @@ export const CreateRentForm = () => {
             </section>
           ) : null}
         </section>
-        <section className="flex flex-col w-full">
+        <section className="flex flex-col w-full px-4 md:px-2">
           <MobileStepper
             variant="progress"
             steps={6}

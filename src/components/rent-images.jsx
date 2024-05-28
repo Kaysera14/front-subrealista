@@ -33,7 +33,7 @@ export const RentImages = ({ setStepData, stepData }) => {
 
   return (
     <section className="flex flex-col w-full items-center justify-evenly">
-      <h2 className="font-semibold text-2xl md:text-3xl mb-4">
+      <h2 className="font-semibold text-center text-2xl md:text-3xl mb-4">
         Añade algunas imágenes de tu apartamento
       </h2>
 
