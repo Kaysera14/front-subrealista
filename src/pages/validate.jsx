@@ -48,7 +48,7 @@ export function Validate({ email, setEmail }) {
 
   return (
     <Main>
-      <section className="flex flex-col h-screen w-full items-center justify-center max-w-full">
+      <section className="flex flex-col h-[80vh] min-h-full w-full items-center justify-center max-w-full">
         <h1 className="text-4xl block self-center mb-5">Intoduce tu código</h1>
         <ValidateForm
           formData={formData}
