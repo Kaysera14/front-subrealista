@@ -116,7 +116,7 @@ export function EditUserPage() {
 
   return (
     <Main>
-      <section className="flex flex-col justify-evenly py-4 items-center w-full">
+      <section className="flex flex-col justify-evenly py-4 items-center w-full max-w-full">
         <h1 className="text-4xl block self-center">Edita tu cuenta</h1>
         <UserEditForm
           setSelectedImage={setSelectedImage}

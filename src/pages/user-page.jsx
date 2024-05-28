@@ -124,8 +124,8 @@ export function UserPage() {
 
   return (
     <Main>
-      <section className="flex flex-col min-h-[100%] items-center justify-center">
-        <article className="flex w-full max-w-screen-2xl">
+      <section className="flex flex-col min-h-[100%] items-center justify-center w-full max-w-full">
+        <article className="flex w-full">
           <section className="flex flex-col w-full pb-10 md:flex-row border-b">
             <span className="flex flex-row w-full justify-between items-start mb-12 md:hidden">
               {username !== userData?.username ? null : (

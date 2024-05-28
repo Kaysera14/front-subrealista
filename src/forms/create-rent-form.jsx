@@ -142,7 +142,7 @@ export const CreateRentForm = () => {
 
   return (
     <Main>
-      <section className="flex flex-col w-full min-h-[100%] self-center items-center justify-center py-8">
+      <section className="flex flex-col w-full min-h-[100%] self-center items-center justify-center py-8 max-w-full">
         <section className="flex flex-row w-full space-between min-h-[70vh] max-h-[70vh] md:min-h-[65vh] md:max-h-[66vh]">
           {activeStep === 0 && (
             <RentType setStepData={setStepData} stepData={stepData} />

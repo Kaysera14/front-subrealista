@@ -103,7 +103,7 @@ export function NewUserPage({ setEmail }) {
 
   return (
     <Main>
-      <section className="flex flex-col w-full items-center justify-center">
+      <section className="flex flex-col w-full items-center justify-center max-w-full">
         <h1 className="text-4xl block self-center mb-5">Crea tu cuenta</h1>
         <RegistrationForm
           formData={formData}

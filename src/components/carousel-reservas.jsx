@@ -78,8 +78,8 @@ export default function CarouselReservas({ posts, rentals }) {
       if (isMobileView) {
         return prevIndex === 0 ? rentals.length - 1 : prevIndex - 1;
       } else {
-        const newIndex = prevIndex - groupSize;
-        return newIndex < 0 ? rentals.length - 1 : newIndex;
+        const newIndex = prevIndex === -1 ? 0 : prevIndex - groupSize;
+        return newIndex < 0 ? 0 : newIndex;
       }
     });
   };
@@ -90,8 +90,6 @@ export default function CarouselReservas({ posts, rentals }) {
 
   const numGroups = Math.ceil(posts.length / groupSize); // Calcular el número de grupos de tres elementos
   const groupIndexes = Array.from({ length: numGroups }, (_, i) => i);
-
-  console.log(numGroups, groupIndexes);
 
   return isMobileView ? (
     <section className="w-full max-w-full relative overflow-hidden">
@@ -109,7 +107,13 @@ export default function CarouselReservas({ posts, rentals }) {
             posts?.map((rent, index) => {
               return (
                 <li
-                  className="carousel-reservas-item flex flex-col justify-center items-center p-8"
+                  className={`carousel-valoraciones-item flex flex-col justify-center items-center p-8 ${
+                    window.innerWidth <= 1100
+                      ? window.innerWidth > 768
+                        ? "max-w-[50%]"
+                        : "max-w-[100%]"
+                      : "max-w-[33%]"
+                  }`}
                   key={index}
                 >
                   <aside className="flex flex-col relative">
@@ -191,16 +195,18 @@ export default function CarouselReservas({ posts, rentals }) {
         onTouchEnd={(e) => handleDragEnd(e)}
       >
         <ul
-          className="carousel-reservas-inner overflow-x-hidden z-0 flex flex-row transition-transform w-full"
+          className="carousel-reservas-inner z-0 flex flex-row transition-transform w-full"
           style={{
             transform: `translateX(-${currentIndex * (100 / groupSize)}%)`,
           }}
         >
-          {groupIndexes?.map((groupIndex) => (
+          {groupIndexes?.map((_, groupIndex) => (
             <li
               key={groupIndex}
               className={`flex flex-row min-w-full ${
-                window.innerWidth <= 1100 ? "justify-center" : "justify-auto"
+                window.innerWidth <= 1100
+                  ? "justify-center"
+                  : "justify-auto px-8"
               }`}
             >
               {posts
@@ -224,26 +230,26 @@ export default function CarouselReservas({ posts, rentals }) {
                         {rentals[realIndex].rental_status === "Pendiente" && (
                           <NewReleasesOutlinedIcon
                             color="warning"
-                            className="absolute top-2 left-2 shadow-md bg-white rounded-full"
+                            className="absolute top-2 left-2 shadow-md bg-white rounded-full z-20"
                           />
                         )}
                         {rentals[realIndex].rental_status === "Aceptado" && (
                           <CheckCircleOutlinedIcon
                             color="success"
-                            className="absolute top-2 left-2 shadow-md bg-white rounded-full"
+                            className="absolute top-2 left-2 shadow-md bg-white rounded-full z-20"
                           />
                         )}
                         {rentals[realIndex].rental_status === "Rechazado" && (
                           <CancelOutlinedIcon
                             color="error"
-                            className="absolute top-2 left-2 shadow-md bg-white rounded-full"
+                            className="absolute top-2 left-2 shadow-md bg-white rounded-full z-20"
                           />
                         )}
                         <img
                           src={rent.rent_cover}
                           alt={rent.rent_title}
                           onClick={() => navigate(`/rent/${rent.rent_id}`)}
-                          className={`rounded-3xl aspect-square object-cover max-w-56 ${
+                          className={`rounded-3xl aspect-square object-cover max-w-56 z-0 ${
                             rentals[realIndex]?.rental_end <= currentDate
                               ? "filter grayscale"
                               : ""

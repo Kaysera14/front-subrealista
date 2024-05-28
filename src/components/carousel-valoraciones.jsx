@@ -79,8 +79,8 @@ export default function CarouselValoraciones({
       if (isMobileView) {
         return prevIndex === 0 ? rentals.length - 1 : prevIndex - 1;
       } else {
-        const newIndex = prevIndex - groupSize;
-        return newIndex < 0 ? rentals.length - 1 : newIndex;
+        const newIndex = prevIndex === -1 ? 0 : prevIndex - groupSize;
+        return newIndex < 0 ? 0 : newIndex;
       }
     });
   };
@@ -126,7 +126,13 @@ export default function CarouselValoraciones({
 
               return isNaN(ratingValue) || ratingValue === undefined ? (
                 <li
-                  className="carousel-valoraciones-item flex flex-col justify-center items-center p-8"
+                  className={`carousel-valoraciones-item flex flex-col justify-center items-center p-8 ${
+                    window.innerWidth <= 1100
+                      ? window.innerWidth > 768
+                        ? "max-w-[50%]"
+                        : "max-w-[100%]"
+                      : "max-w-[33%]"
+                  }`}
                   key={index}
                 >
                   {activeRentId === rent.rent_id && (
@@ -250,7 +256,7 @@ export default function CarouselValoraciones({
         onTouchEnd={(e) => handleDragEnd(e)}
       >
         <ul
-          className="carousel-comments-inner overflow-x-hidden z-0 flex flex-row transition-transform w-full"
+          className="carousel-comments-inner z-0 flex flex-row transition-transform w-full"
           style={{
             transform: `translateX(-${currentIndex * (100 / groupSize)}%)`,
           }}
@@ -258,7 +264,11 @@ export default function CarouselValoraciones({
           {groupIndexes?.map((groupIndex) => (
             <li
               key={groupIndex}
-              className="flex flex-row items-center justify-center min-w-full"
+              className={`flex flex-row min-w-full ${
+                window.innerWidth <= 1100
+                  ? "justify-center"
+                  : "justify-auto px-8"
+              }`}
             >
               {posts
                 .slice(

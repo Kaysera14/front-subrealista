@@ -69,6 +69,7 @@ export function Valoraciones() {
           const postsArray = await Promise.all(
             rentals.map(async (rental) => {
               const postData = await getRentData(rental.rental_rent_id);
+              console.log(postData);
               if (postData.status === "ok") {
                 return postData.data.result;
               } else {
@@ -88,7 +89,7 @@ export function Valoraciones() {
     };
 
     fetchPostDataForRentals();
-  }, [rentals]);
+  }, [rentals, rentals?.length]);
 
   const updateRentalsAndPosts = async () => {
     try {
@@ -124,7 +125,7 @@ export function Valoraciones() {
         "No hay reservas, no se pueden actualizar los datos del usuario hasta que no hayan reservas"
       );
     }
-  }, [rentals]);
+  }, [rentals, rentals?.length]);
 
   useEffect(() => {
     try {
@@ -152,11 +153,11 @@ export function Valoraciones() {
         "No hay reservas, no se pueden actualizar los datos hasta que no haya alguna reserva"
       );
     }
-  }, [rentals]);
+  }, [rentals, rentals?.length]);
 
   return (
     <Main>
-      <section className="flex flex-col items-center justify-center py-8">
+      <section className="flex flex-col items-center justify-center py-8 max-w-full">
         <section className="flex flex-col w-full items-center justify-center gap-12 bg-white md:max-w-[75%] md:min-w-[45rem]">
           <aside className="flex flex-col w-full items-center justify-center">
             <h2 className="font-semibold text-2xl pb-2">Reservas</h2>

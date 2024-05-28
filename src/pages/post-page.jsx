@@ -110,7 +110,7 @@ export function PostPage({ setSuccess, success }) {
     post &&
     (payActive ? (
       <Main>
-        <section className="flex flex-col items-center justify-center w-full">
+        <section className="flex flex-col items-center justify-center w-full max-w-full">
           {dateValue.length !== 0 && (
             <PaymentGateway
               payActive={payActive}

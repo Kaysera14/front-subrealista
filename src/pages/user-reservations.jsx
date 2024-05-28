@@ -115,11 +115,11 @@ export const UsersReservations = () => {
 
   return user && reservations?.length !== 0 ? (
     <Main>
-      <section className="flex flex-col w-full items-center min-h-[65vh] h-[65vh] md:my-8 md:justify-center md:my-0">
+      <section className="flex flex-col w-full items-center  max-w-full min-h-[65vh] h-[65vh] md:my-8 md:justify-center md:my-0">
         <h2 className="text-center font-bold text-xl mt-8 mb-8 md:text-2xl md:fixed md:top-24">
           Reservas realizadas por los usuarios
         </h2>
-        <ul className="custom-scrollbar flex flex-col w-full items-center justify-start p-4 gap-4 overflow-y-scroll overflow-x-hidden md:w-8/12 md:min-w-[45rem] md:gap-8 md:mt-8 md:max-h-[55vh] md:min-h-[55vh]">
+        <ul className="custom-scrollbar flex flex-col w-full items-center min-h-[100%] max-h-[100%] justify-start p-4 gap-4 overflow-y-scroll overflow-x-hidden md:w-8/12 md:min-w-[45rem] md:gap-8 md:mt-8 md:max-h-[55vh] md:min-h-[55vh]">
           {reservations?.map((reservation, index) => {
             return (
               <li

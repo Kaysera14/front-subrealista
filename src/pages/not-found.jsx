@@ -5,7 +5,7 @@ import { Main } from "../components/main";
 export function NotFound() {
   return (
     <Main>
-      <section className="flex flex-col justify-evenly items-center mt-4 gap-4 md:mt-0 md:gap-4">
+      <section className="flex flex-col justify-evenly items-center mt-4 gap-4 max-w-full md:mt-0 md:gap-4">
         <h2 className="text-3xl md:text-2xl">¡Te has perdido!</h2>
         <img
           className="w-[25rem] md:w-[15rem]"

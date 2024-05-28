@@ -41,7 +41,7 @@ export default function Home({
   return posts?.length !== 0 ? (
     <Main>
       <section
-        className="flex flex-col bg-white fixed top-0 items-center justify-center w-screen mb-5 p-5 border-solid border-b-2 drop-shadow-sm z-10 md:hidden"
+        className="flex flex-col bg-white fixed top-0 items-center justify-center w-screen mb-5 p-5 border-solid border-b-2 drop-shadow-sm z-10 max-w-full md:hidden"
         onClick={() => setIsOpen(!isOpen)}
       >
         <aside className="flex flex-row w-[90%] border-solid border-2 p-2 rounded-full drop-shadow-md bg-white text-black">
@@ -93,7 +93,7 @@ export default function Home({
   ) : (
     <Main>
       <section
-        className="flex flex-col bg-white fixed top-0 items-center justify-center w-screen mb-5 p-5 border-solid border-b-2 drop-shadow-sm z-10 md:hidden"
+        className="flex flex-col bg-white fixed top-0 items-center justify-center w-screen mb-5 p-5 border-solid border-b-2 drop-shadow-sm z-10 max-w-full md:hidden"
         onClick={() => setIsOpen(!isOpen)}
       >
         <aside className="flex  flex-row w-[90%] border-solid border-2 p-2 rounded-full drop-shadow-md bg-white text-black">
