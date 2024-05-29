@@ -6,6 +6,7 @@ import { CurrentUserContext } from "../context/auth-context";
 import CarouselValoraciones from "../components/carousel-valoraciones";
 import { getTenantsRatings } from "../services/get-tenants-ratings";
 import CarouselReservas from "../components/carousel-reservas";
+import { getOwnersRatings } from "../services/get-owners-ratings";
 
 export function Valoraciones() {
   const [rentals, setRentals] = useState();
@@ -43,7 +44,8 @@ export function Valoraciones() {
     const fetchRatings = async () => {
       try {
         if (userData && userData.username) {
-          const ratingsData = await getTenantsRatings(userData.username);
+          const ratingsData = await getTenantsRatings(userData?.username);
+
           if (ratingsData?.status === "ok") {
             setRatings(ratingsData.data);
           } else {
@@ -59,7 +61,7 @@ export function Valoraciones() {
     };
 
     fetchRatings();
-  }, [userData]);
+  }, [rentals, rentals?.length]);
 
   // Fetch posts data for rentals
   useEffect(() => {
@@ -100,59 +102,6 @@ export function Valoraciones() {
       console.error("Error updating rentals and posts", error);
     }
   };
-
-  useEffect(() => {
-    try {
-      const fetchRatings = async () => {
-        if (userData && userData.username) {
-          const ratingsData = await getTenantsRatings(userData?.username);
-
-          if (ratingsData?.status === "ok") {
-            setRatings(ratingsData.data);
-          } else {
-            setError({
-              ...error,
-              errorVal: ratingsData?.message,
-            });
-          }
-        }
-      };
-
-      fetchRatings();
-    } catch {
-      console.error(
-        "No hay reservas, no se pueden actualizar los datos del usuario hasta que no hayan reservas"
-      );
-    }
-  }, [rentals, rentals?.length]);
-
-  useEffect(() => {
-    try {
-      if (rentals && rentals.length !== 0) {
-        const fetchPostDataForRentals = async () => {
-          const postsArray = [];
-          for (const rental of rentals) {
-            const postData = await getRentData(rental.rental_rent_id);
-            if (postData.status === "ok") {
-              postsArray.push(postData?.data?.result);
-            } else {
-              setError((prevError) => ({
-                ...prevError,
-                errorRes: "Error en la carga de posts",
-              }));
-            }
-          }
-          setPosts(postsArray);
-        };
-
-        fetchPostDataForRentals();
-      }
-    } catch {
-      console.error(
-        "No hay reservas, no se pueden actualizar los datos hasta que no haya alguna reserva"
-      );
-    }
-  }, [rentals, rentals?.length]);
 
   return (
     <Main>

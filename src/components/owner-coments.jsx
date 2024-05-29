@@ -14,6 +14,7 @@ export function OwnerComents({ user, post }) {
         const ratingsData = await getOwnersRatings(
           post ? post.rent_owner : user.username
         );
+
         if (ratingsData?.status === "ok") {
           setRatings(ratingsData?.data);
         } else {

@@ -89,14 +89,18 @@ export default function CarouselValoraciones({
     setCurrentIndex(index);
   };
 
-  function searchPostRatingId(rent) {
-    if (rent && ratings) {
+  function searchPostRatingId(rental) {
+    if (rental && ratings) {
       const rating = ratings.find(
-        (rating) => rating.renting_id === rent.rent_id
+        (rating) => rating.renting_id === rental.rental_id
       );
 
       return rating
-        ? { rating: rating.rating, comments: rating.comments }
+        ? {
+            id: rating.renting_id,
+            rating: rating.rating,
+            comments: rating.comments,
+          }
         : null;
     }
     return null;
@@ -104,6 +108,8 @@ export default function CarouselValoraciones({
 
   const numGroups = Math.ceil(posts.length / groupSize); // Calcular el número de grupos de tres elementos
   const groupIndexes = Array.from({ length: numGroups }, (_, i) => i);
+
+  const displayedRentals = new Set();
 
   return isMobileView ? (
     <section className="w-full max-w-full relative overflow-hidden">
@@ -121,8 +127,12 @@ export default function CarouselValoraciones({
             posts?.map((rent, index) => {
               const rentRating = searchPostRatingId(rent);
               const ratingValue = parseInt(rentRating?.rating);
-
               const ratingComments = rentRating?.comments;
+
+              const alreadyDisplayed = displayedRentals.has(rent.rent_id);
+              if (!alreadyDisplayed && rentRating) {
+                displayedRentals.add(rent.rent_id);
+              }
 
               return isNaN(ratingValue) || ratingValue === undefined ? (
                 <li
@@ -207,13 +217,22 @@ export default function CarouselValoraciones({
                       <h3 className="font-semibold text-md">
                         {rent.rent_title}
                       </h3>
-                      <Rating
-                        value={ratingValue}
-                        name="size-medium"
-                        readOnly
-                        className="-ml-1"
-                      />
-                      <p className="mt-2">{ratingComments}</p>
+                      {!alreadyDisplayed &&
+                        ratingValue !== undefined &&
+                        !isNaN(ratingValue) && (
+                          <>
+                            <Rating
+                              value={ratingValue}
+                              name="size-medium"
+                              readOnly
+                              className="-ml-1"
+                            />
+                            <p className="mt-2">{ratingComments}</p>
+                          </>
+                        )}
+                      {alreadyDisplayed && (
+                        <p className="mt-2">No comments yet</p>
+                      )}
                     </aside>
                   </aside>
                 </li>
@@ -267,7 +286,7 @@ export default function CarouselValoraciones({
               className={`flex flex-row min-w-full ${
                 window.innerWidth <= 1100
                   ? "justify-center"
-                  : "justify-auto px-8"
+                  : "justify-auto px-12"
               }`}
             >
               {posts
@@ -277,11 +296,17 @@ export default function CarouselValoraciones({
                 )
                 .map((rent, index) => {
                   const realIndex = groupIndex * groupSize + index;
-                  const rentRating = searchPostRatingId(rent);
-                  const ratingValue = parseInt(rentRating?.rating);
-                  const ratingComments = rentRating?.comments;
 
-                  return isNaN(ratingValue) || ratingValue === undefined ? (
+                  const rentRating = rentals?.map((rental) =>
+                    searchPostRatingId(rental)
+                  );
+
+                  const ratingValue = parseInt(rentRating[realIndex]?.rating);
+
+                  const ratingComments = rentRating[realIndex]?.comments;
+
+                  return (isNaN(ratingValue) || ratingValue !== undefined) &&
+                    rentRating[realIndex] === null ? (
                     <section
                       className={`carousel-reservas-item flex flex-col self-start justify-start items-center py-8 ${
                         window.innerWidth <= 1100

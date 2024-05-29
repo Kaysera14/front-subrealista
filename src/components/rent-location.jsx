@@ -38,7 +38,7 @@ export const RentLocation = ({ stepData, setStepData }) => {
   useEffect(() => {
     if (position?.length === 0) {
       const getPosition = async () => {
-        if (navigator.geolocation) {
+        if ("geolocation" in navigator) {
           navigator.geolocation.getCurrentPosition(
             (location) => {
               setPosition([
@@ -48,6 +48,7 @@ export const RentLocation = ({ stepData, setStepData }) => {
             },
             (error) => {
               console.error("Error getting geolocation:", error);
+              setPosition([40.3053758, -3.7265405]);
             }
           );
           navigator.geolocation.getCurrentPosition(async (location) => {
@@ -66,12 +67,13 @@ export const RentLocation = ({ stepData, setStepData }) => {
             });
           });
         } else {
+          setPosition([40.3053758, -3.7265405]);
           console.error("Geolocation is not supported by this browser.");
         }
       };
       getPosition();
     }
-  }, []);
+  }, [position?.length]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -126,6 +128,7 @@ export const RentLocation = ({ stepData, setStepData }) => {
       map.setView([position[0], position[1]]);
     }
   };
+
   return (
     <section className="flex flex-col relative w-full items-center justify-evenly md:px-16">
       <h2 className="font-semibold text-2xl md:text-3xl">
@@ -170,8 +173,9 @@ export const RentLocation = ({ stepData, setStepData }) => {
           <SearchIcon className="w-5 h-5 text-white" />
         </button>
       </form>
-      {position?.length !== 0 && (
-        <section className="w-full h-[36rem] md:h-[31rem]">
+
+      <section className="w-full h-[36rem] md:h-[31rem]">
+        {position?.length !== 0 && (
           <MapContainer
             center={position}
             zoom={13}
@@ -193,8 +197,9 @@ export const RentLocation = ({ stepData, setStepData }) => {
               </Popup>
             </Marker>
           </MapContainer>
-        </section>
-      )}
+        )}
+      </section>
+
       {error ? (
         <Stack
           sx={{

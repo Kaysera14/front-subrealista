@@ -206,7 +206,7 @@ export default function CarouselReservas({ posts, rentals }) {
               className={`flex flex-row min-w-full ${
                 window.innerWidth <= 1100
                   ? "justify-center"
-                  : "justify-auto px-8"
+                  : "justify-auto px-12"
               }`}
             >
               {posts
