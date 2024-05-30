@@ -45,7 +45,7 @@ export function Valoraciones() {
 			try {
 				if (userData && userData.username) {
 					const ratingsData = await getTenantsRatings(userData?.username);
-
+					console.log(ratingsData.data);
 					if (ratingsData?.status === "ok") {
 						setRatings(ratingsData.data);
 					} else {

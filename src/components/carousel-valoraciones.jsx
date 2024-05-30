@@ -91,7 +91,7 @@ export default function CarouselValoraciones({
 	function searchPostRatingId(rental) {
 		if (rental && ratings) {
 			const rating = ratings.find(
-				(rating) => rating.renting_id === rental.rental_id
+				(rating) => rating.renting_id === rental.rental_rent_id
 			);
 			return rating
 				? {
@@ -298,6 +298,8 @@ export default function CarouselValoraciones({
 									const rentRating = rentals?.map((rental) =>
 										searchPostRatingId(rental)
 									);
+									console.log(ratings);
+									console.log(rentRating);
 
 									const ratingValue = parseInt(rentRating[realIndex]?.rating);
 
