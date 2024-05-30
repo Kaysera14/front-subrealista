@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { getCurrentUserFromLocalStorage } from "../utils/get-current-user";
-import { getUserDataService } from "../services/get_user";
+import { getUserDataService } from "../services/get-user";
 
 export const CurrentUserContext = createContext(null);
 export const CurrentUserUpdateContext = createContext(() => {});
@@ -12,7 +12,9 @@ export function AuthContextProvider({ children }) {
   useEffect(() => {
     const handleUser = async () => {
       if (user) {
-        const currentUser = await getUserDataService(user?.username);
+        const currentUser = await getUserDataService(
+          user?.username || user?.newUsername
+        );
         setUserData(currentUser);
       } else {
         setUserData(null);

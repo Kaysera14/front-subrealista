@@ -70,7 +70,7 @@ export function LoginUserPage() {
 
   return (
     <Main>
-      <section className="flex flex-col h-screen w-full items-center justify-center">
+      <section className="flex flex-col h-[65vh] w-full items-center justify-center max-w-full">
         <h1 className="text-4xl block self-center mb-5">Inicia sesión</h1>
         <LoginForm
           formData={formData}

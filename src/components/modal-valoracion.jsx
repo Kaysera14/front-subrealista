@@ -1,7 +1,7 @@
 import { Rating } from "@mui/material";
 import { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import { postRating } from "../services/post_rating";
+import { postRating } from "../services/post-rating";
 
 export function ModalValoracion({
   rent,
@@ -10,7 +10,6 @@ export function ModalValoracion({
 }) {
   const [rate, setRate] = useState(0);
   const [comment, setComment] = useState("");
-  console.log(rent);
 
   const handleTouchStart = (e) => {
     const touchX = e.touches[0].clientX;
@@ -43,7 +42,7 @@ export function ModalValoracion({
   }
 
   return (
-    <section className="flex flex-col relative w-10/12 items-center justify-center bg-white rounded-lg  p-16 md:w-6/12">
+    <section className="flex flex-col relative w-10/12 items-center justify-center bg-white rounded-lg p-16 md:w-6/12">
       <button
         onClick={() => setActiveRentId(null)}
         type="button"

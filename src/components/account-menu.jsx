@@ -11,8 +11,15 @@ export default function DenseMenu({ active, user }) {
   const navigate = useNavigate();
   const logout = useLogout();
 
-  return active ? (
-    user === null ? (
+  const handleLogOut = () => {
+    localStorage.setItem("sawReservations", JSON.stringify([]));
+    logout();
+    navigate("/");
+  };
+
+  return (
+    active &&
+    (user === null ? (
       <Paper
         sx={{ width: "15rem", borderRadius: "20px" }}
         className="absolute top-14 right-10 z-0 drop-shadow-lg"
@@ -39,29 +46,28 @@ export default function DenseMenu({ active, user }) {
         className="absolute top-14 right-10 z-0 drop-shadow-lg"
       >
         <MenuList dense>
-          <MenuItem onClick={() => navigate(`/users/${user.username}`)}>
+          <MenuItem onClick={() => navigate(`/users/${user?.username}`)}>
             <ListItemText>
-              <strong>User Profile</strong>
+              <strong>Perfil de usuario</strong>
             </ListItemText>
+          </MenuItem>
+          <MenuItem onClick={() => navigate("/valorations")}>
+            <ListItemText>Tus Reservas y valoraciones</ListItemText>
           </MenuItem>
 
           <Divider />
-          <MenuItem onClick={() => navigate(`/valoraciones`)}>
-            <ListItemText>Reservas y valoraciones</ListItemText>
+
+          <MenuItem onClick={() => navigate("/users-valorations")}>
+            <ListItemText>Alertas de reservas</ListItemText>
           </MenuItem>
           <MenuItem onClick={() => navigate("/rent-create")}>
             <ListItemText>Pon tu casa en Subrealista</ListItemText>
           </MenuItem>
-          <MenuItem
-            onClick={() => {
-              logout();
-              navigate("/");
-            }}
-          >
+          <MenuItem onClick={() => handleLogOut()}>
             <ListItemText>Cerrar Sesión</ListItemText>
           </MenuItem>
         </MenuList>
       </Paper>
-    )
-  ) : null;
+    ))
+  );
 }

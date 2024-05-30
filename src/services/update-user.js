@@ -1,9 +1,9 @@
-export async function postRent(jsonData, token) {
+export async function updateUser(userName, userData, token) {
   const response = await fetch(
-    `${import.meta.env.VITE_APP_BACKEND}/new-renting/`,
+    `${import.meta.env.VITE_APP_BACKEND}/users/${userName}`,
     {
-      method: "POST",
-      body: jsonData,
+      method: "PUT",
+      body: userData,
       headers: {
         Authorization: token,
       },

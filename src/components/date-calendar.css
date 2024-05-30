@@ -11,3 +11,8 @@
   color: black;
   font-weight: 700;
 }
+
+.react-calendar {
+  border: 0;
+  width: 100%;
+}

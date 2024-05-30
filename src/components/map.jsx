@@ -12,7 +12,7 @@ export const Mapa = ({ location }) => {
       try {
         const data = await buscarDireccion(location);
         if (data) {
-          setPosition([parseFloat(data[0]), parseFloat(data[1])]);
+          setPosition([parseFloat(data.lat), parseFloat(data.lon)]);
         }
       } catch (error) {
         console.error("Error al buscar la dirección:", error);

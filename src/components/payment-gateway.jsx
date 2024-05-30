@@ -52,7 +52,7 @@ export function PaymentGateway({
     dateValue.length !== 0 &&
     payActive &&
     images.length !== 0 ? (
-    <section className="flex flex-col relative w-full overflow-scroll my-8 md:max-w-[75rem] md:py-8 md:h-screen md:overflow-hidden">
+    <section className="flex flex-col relative w-full overflow-scroll my-8 md:max-w-[75rem] md:py-8 md:h-full md:overflow-hidden">
       <button
         className="flex flex-col items-center justify-center absolute left-5 top-0 border rounded-full p-2 shadow-sm md:top-10 md:left-0"
         onClick={() => setPayActive(!payActive)}

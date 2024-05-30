@@ -1,17 +1,17 @@
-.carousel-comments-container {
+.carousel-valoraciones-container {
   width: 100%;
   margin: 0 auto; /* Ocultar desplazamiento horizontal */
   position: relative;
   overflow: hidden;
 }
 
-.carousel-comments-inner {
+.carousel-valoraciones-inner {
   display: flex;
   width: 100%;
   transition: transform 0.5s ease; /* Transición suave */
 }
 
-.carousel-comments-item {
+.carousel-valoraciones-item {
   flex: 0 0 100%;
 }
 
@@ -20,16 +20,16 @@
 }
 
 /* Carousel puntos para desplazarse entre imagenes */
-.carousel-comments-dots {
+.carousel-valoraciones-dots {
   position: absolute;
-  bottom: -5px;
+  bottom: 9.5rem;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   z-index: 3;
 }
 
-.comments-dot {
+.val-dot {
   width: 8px;
   height: 8px;
   background-color: gray; /* Estilo para el punto no activo */
@@ -38,11 +38,11 @@
   cursor: pointer;
 }
 
-.active-dot {
+.active-dot-val {
   background-color: white; /* Estilo para el punto activo */
 }
 
-.carousel-btn {
+.carousel-btn-val {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -58,33 +58,23 @@
   z-index: 1;
 }
 
-.carousel-btn:hover {
+.carousel-btn-val:hover {
   background-color: rgba(255, 255, 255, 0.8);
 }
 
-.prev-comment-btn {
-  left: -1rem;
+.prev-valoraciones-btn {
+  left: 10px;
   visibility: visible;
 }
 
-.prev-comment-user-btn {
-  left: 4rem;
-  visibility: visible;
-}
-
-.next-comment-btn {
-  right: -1rem;
-  visibility: visible;
-}
-
-.next-comment-user-btn {
-  right: 4rem;
+.next-valoraciones-btn {
+  right: 10px;
   visibility: visible;
 }
 
 /* Ocultar flechas en dispositivos móviles */
 @media screen and (max-width: 768px) {
-  .carousel-btn {
+  .carousel-btn-val {
     display: none;
   }
 }

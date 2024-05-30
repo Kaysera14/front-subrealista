@@ -1,0 +1,79 @@
+.carousel-reservas-container {
+  width: 100%;
+  margin: 0 auto; /* Ocultar desplazamiento horizontal */
+  overflow: hidden;
+  position: relative;
+}
+
+.carousel-reservas-inner {
+  display: flex;
+  width: 100%;
+  transition: transform 0.5s ease; /* Transición suave */
+}
+
+.carousel-reservas-item {
+  flex: 0 0 100%;
+}
+
+.carousel-reservas-item-pc {
+  flex: 0 0 33%;
+}
+
+/* Carousel puntos para desplazarse entre imagenes */
+.carousel-reservas-dots {
+  bottom: 7rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  z-index: 3;
+}
+
+.res-dot {
+  width: 8px;
+  height: 8px;
+  background-color: gray; /* Estilo para el punto no activo */
+  margin: 0 5px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.active-dot-res {
+  background-color: white; /* Estilo para el punto activo */
+}
+
+.carousel-btn-res {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.5);
+  width: 40px; /* Ancho igual al alto */
+  height: 40px; /* Alto igual al ancho */
+  border-radius: 50%; /* Hacer la flecha redonda */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease;
+  z-index: 1;
+}
+
+.carousel-btn-res:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.prev-res-btn {
+  left: 10px;
+  visibility: visible;
+}
+
+.next-res-btn {
+  right: 10px;
+  visibility: visible;
+}
+
+/* Ocultar flechas en dispositivos móviles */
+@media screen and (max-width: 768px) {
+  .carousel-btn-res {
+    display: none;
+  }
+}

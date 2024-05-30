@@ -1,17 +1,20 @@
 import { useEffect, useState } from "react";
 import { Main } from "../components/main";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Alert, Stack } from "@mui/material";
 import { ValidateForm } from "../forms/validate-form";
 import { userValidate } from "../services/user-validate";
 
-export function Validate() {
+export function Validate({ email, setEmail }) {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 768);
+  const [success, setSuccess] = useState(
+    `Se ha enviado un correo con el código de verificación a tu email ${email}`
+  );
   const [error, setError] = useState("");
   const [formData, setFormData] = useState({
-    code: "",
+    code: searchParams.get("registrationCode") || "",
   });
 
   useEffect(() => {
@@ -38,21 +41,42 @@ export function Validate() {
 
     const validateInfo = await userValidate(formData?.code, setError);
     if (validateInfo) {
+      setEmail("");
       navigate("/login");
-    } else {
-      setFormData({ code: "" });
     }
   };
 
   return (
     <Main>
-      <section className="flex flex-col h-screen w-full items-center justify-center">
+      <section className="flex flex-col h-[80vh] min-h-full w-full items-center justify-center max-w-full">
         <h1 className="text-4xl block self-center mb-5">Intoduce tu código</h1>
         <ValidateForm
           formData={formData}
           handleInputChange={handleInputChange}
           handleSubmit={handleSubmit}
         />
+        {success ? (
+          <Stack
+            sx={{
+              width: isMobileView ? "100%" : "50%",
+              position: "static",
+              zIndex: "20",
+              bottom: "0",
+              right: "0",
+              backgroundColor: "white",
+              marginTop: "1rem",
+            }}
+            spacing={2}
+          >
+            <Alert
+              variant="outlined"
+              severity="success"
+              onClose={() => setSuccess("")}
+            >
+              {success}
+            </Alert>
+          </Stack>
+        ) : null}
         {error ? (
           <Stack
             sx={{
@@ -75,18 +99,6 @@ export function Validate() {
             </Alert>
           </Stack>
         ) : null}
-        <p className="flex justify-center gap-2 mt-5">
-          ¿No tienes cuenta?
-          <Link to="/register" style={{ color: "var(--quaternary-color)" }}>
-            ¡Regístrate!
-          </Link>
-        </p>
-        <Link
-          to="/restore-password"
-          style={{ color: "var(--quaternary-color)" }}
-        >
-          ¿Has olvidado tu contraseña?
-        </Link>
       </section>
     </Main>
   );

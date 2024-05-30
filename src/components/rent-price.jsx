@@ -16,9 +16,11 @@ export function RentPrice({
 }) {
   return (
     <aside className="w-5/12 hidden p-6 gap-2 md:flex">
-      <section className="flex flex-col items-center w-full">
+      <section className="flex flex-col items-center w-full relative">
         <span className="flex flex-col w-full items-center bg-white p-6 rounded-lg shadow-xl border sticky top-56 right-0">
-          <h3 className="text-2xl font-bold mb-5">{`${post.rent_price}€ noche`}</h3>
+          <h3 className="text-2xl font-bold mb-5">{`${post.rent_price.toFixed(
+            2
+          )}€ noche`}</h3>
           <ul className="flex flex-row w-full items-center justify-center border-2 rounded-lg flex-wrap">
             {dateValue && dateValue[0] > 1 ? (
               <li className="px-4 py-2 w-6/12 border-r">

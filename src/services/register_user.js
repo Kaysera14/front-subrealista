@@ -1,12 +1,12 @@
-import { METHODS, sendApiRequest } from "./send-api-request.js";
+export async function registerUser(userData) {
+  const response = await fetch(`${import.meta.env.VITE_APP_BACKEND}/register`, {
+    method: "POST",
+    body: userData,
+  });
+  const json = await response.json();
 
-export async function registerUser(email, username, password, setError) {
-  const requestBody = { email, username, password };
-  const response = await sendApiRequest(METHODS.POST, `/register`, requestBody);
-  if (response.status === "ok") {
-    return response.status;
-  } else {
-    setError(`Error: ${response.message}`);
-    return null;
+  if (json?.status !== "ok") {
+    return json;
   }
+  return json;
 }

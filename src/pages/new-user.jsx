@@ -6,7 +6,7 @@ import { RegistrationForm } from "../forms/registration-form";
 import { registerUser } from "../services/register_user";
 import { Alert, Stack } from "@mui/material";
 
-export function NewUserPage() {
+export function NewUserPage({ setEmail }) {
   const navigate = useNavigate();
 
   const [error, setError] = useState("");
@@ -16,6 +16,8 @@ export function NewUserPage() {
     username: "",
     password: "",
   });
+  const [secondPassword, setSecondPassword] = useState("");
+  const [selectedImage, setSelectedImage] = useState();
 
   const [validationErrors, setValidationErrors] = useState({});
 
@@ -37,6 +39,8 @@ export function NewUserPage() {
       ...formData,
       [name]: value,
     });
+
+    setEmail(name === "email" ? value : formData.email);
 
     const validationError = validateField(name, value, newUserSchema);
     setValidationErrors({
@@ -61,27 +65,53 @@ export function NewUserPage() {
       console.error("Error de validación:", errors.details);
       return;
     }
+    if (formData?.password === secondPassword) {
+      const formDataToSend = new FormData();
 
-    const registrationSuccessful = await registerUser(
-      formData.email,
-      formData.username,
-      formData.password,
-      setError
-    );
-    if (registrationSuccessful) {
-      navigate("/validate");
+      formDataToSend.append(
+        "username",
+        formData.username === null ? "" : formData.username
+      );
+      formDataToSend.append(
+        "email",
+        formData.email === null ? "" : formData.email
+      );
+      formDataToSend.append(
+        "password",
+        formData.password === null ? "" : formData.password
+      );
+      formDataToSend.append(
+        "repeatPassword",
+        secondPassword === null ? "" : secondPassword
+      );
+
+      if (selectedImage) {
+        formDataToSend.append("profilePic", selectedImage);
+      }
+
+      const registrationSuccessful = await registerUser(formDataToSend);
+
+      if (registrationSuccessful?.status === "ok") {
+        navigate("/validate");
+      } else {
+        setError(registrationSuccessful?.message);
+      }
+    } else {
+      setError("Las contraseñas no coinciden");
     }
   };
 
   return (
     <Main>
-      <section className="flex flex-col h-screen w-full items-center justify-center">
+      <section className="flex flex-col w-full items-center justify-center mt-8 max-w-full">
         <h1 className="text-4xl block self-center mb-5">Crea tu cuenta</h1>
         <RegistrationForm
           formData={formData}
           handleInputChange={handleInputChange}
           validationErrors={validationErrors}
           handleSubmit={handleSubmit}
+          setSecondPassword={setSecondPassword}
+          setSelectedImage={setSelectedImage}
         />
         {error ? (
           <Stack
@@ -105,7 +135,7 @@ export function NewUserPage() {
             </Alert>
           </Stack>
         ) : null}
-        <p className="flex justify-center gap-2 mt-5">
+        <p className="flex justify-center gap-2 mt-5 mb-4">
           ¿Ya tienes una cuenta?
           <Link to="/login" style={{ color: "var(--quaternary-color)" }}>
             ¡Inicia sesión!

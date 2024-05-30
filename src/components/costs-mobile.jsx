@@ -14,17 +14,19 @@ export function CostsMobile({
     return dayjs(date).format("MMM-DD");
   }
 
+  const rentPrice = post.rent_price.toFixed(2);
+  const totalCost = (
+    post.rent_price * daysDiff +
+    (post.rent_price * 24) / 100 +
+    (post.rent_price * 21) / 100
+  ).toFixed(2);
+
   return (
     <section className="flex flex-row justify-between items-center fixed w-full bottom-0 left-0 bg-white p-2 z-[60] md:hidden border-t shadow-2xl">
       <ul className="flex flex-col">
         <li className="flex flex-row gap-2">
           <p className="font-semibold">Total</p>
-          <p className="font-semibold">{`${
-            post.rent_price * daysDiff +
-            (post.rent_price * daysDiff * 24) / 100 +
-            (post.rent_price * daysDiff * 28) / 100 +
-            (post.rent_price * daysDiff * 21) / 100
-          }€`}</p>
+          <p className="font-semibold">{`${totalCost}€`}</p>
         </li>
         <li className="flex flex-row w-full justify-between py-1 gap-2">
           <p>{formatDate(dateValue[0])}</p>

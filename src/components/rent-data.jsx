@@ -5,7 +5,7 @@ import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Rating } from "@mui/material";
-import { Coments } from "./coments";
+import { OwnerComents } from "./owner-coments";
 
 export function RentData({
   user,
@@ -67,7 +67,7 @@ export function RentData({
       {/*Calendario*/}
       <aside className="flex flex-col mx-8 py-6 gap-2 border-t mb-5">
         <h3 className="text-2xl font-bold mb-5">
-          ¿Cuándo está ocupada la vivienda?
+          ¿Cuándo está disponible la vivienda?
         </h3>
         <Fecha
           active={true}
@@ -82,7 +82,7 @@ export function RentData({
         ref={hostSectionRef}
         className="flex flex-col p-6 pb-8 gap-2 bg-[--tertiary-color] md:rounded-t-md"
       >
-        <Coments post={post} />
+        <OwnerComents post={post} />
         <h3 className="text-2xl font-bold mb-5">Conoce a tu anfitrión</h3>
         <section className="flex flex-col items-center w-full">
           <span className="flex flex-col items-center bg-white w-10/12 p-6 rounded-lg shadow-xl">
