@@ -367,7 +367,7 @@ export default function CarouselValoraciones({
 										</section>
 									) : (
 										<section
-											className={`carousel-reservas-item flex flex-col justify-center items-center py-8 ${
+											className={`carousel-reservas-item flex flex-col justify-start items-center py-8 ${
 												window.innerWidth <= 1100
 													? "max-w-[50%]"
 													: "max-w-[33%]"
